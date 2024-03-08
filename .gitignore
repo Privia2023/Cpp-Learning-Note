@@ -6,3 +6,9 @@ a.out
 
 .idea/
 .vscode/
+
+/Leetcode
+.gitignore
+res
+.DS_Store
+/test
