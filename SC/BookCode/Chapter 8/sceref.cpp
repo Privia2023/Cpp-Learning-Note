@@ -1,5 +1,10 @@
-// 8.2.1 创建应用变量 程序清单8.3 P257
-// secref.cpp -- defining and using a reference
+/**
+ * @file  sceref.cpp
+ * @brief 程序清单8.3 -- defining and using a reference
+ * @date 2024-04
+ *
+ *  就是8.2的再次复现
+ */
 #include <iostream>
 
 using namespace std;

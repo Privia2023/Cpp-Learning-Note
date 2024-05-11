@@ -1,5 +1,9 @@
-// 8.3 默认参数 程序清单8.9 P275
-// left.cpp -- string function with a default argument
+/**
+ * @file  left.cpp
+ * @brief 程序清单 -- string function with a default argument
+ * @date 2024-04
+ *
+ */
 #include <iostream>
 
 const int ArSize = 80;

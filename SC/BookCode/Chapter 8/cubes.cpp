@@ -1,5 +1,10 @@
-// 8.2.3 引用的属性和特别之处 程序清单8.5 P261
-// cubes.cpp -- regular and reference arguments
+/**
+ * @file  cubes.cpp
+ * @brief 程序清单8.5 -- regular and reference arguments
+ * @date 2024-04
+ *
+ *
+ */
 #include <iostream>
 
 using namespace std;
@@ -16,9 +21,10 @@ double refcube(double &ra)
 int main()
 {
     double x = 3.0;
+    // a是cube()的内部变量
     cout << cube(x);
     cout << " = cube of " << x << endl;
-    // 变量a 位于cube()中，它被初始化为x的值，但修改a并不会影响x
+
     cout << refcube(x);
     cout << " = cube of " << x << endl;
     return 0;

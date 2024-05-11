@@ -1,5 +1,10 @@
-// 8.2.3 引用的属性和特别之处 程序清单8.6 P264
-// strc_ref.cpp -- using structure reference
+/**
+ * @file  strc_ref.cpp
+ * @brief 程序清单8.6 -- using structure reference
+ * @date 2024-04
+ *
+ *
+ */
 #include <iostream>
 #include <string>
 using namespace std;

@@ -1,9 +1,13 @@
-// 8.2.2 将引用用作函数参数 程序清单8.4 P259
-// swaps.cpp -- swapping with references and with pointers
+/**
+ * @file  swaps.cpp
+ * @brief 程序清单8.4 -- swapping with references and with pointers
+ * @date 2024-04
+ *
+ */
 #include <iostream>
 
 using namespace std;
-void swapr(int &a, int &b) // use references
+void swapr(int &a, int &b) // use references，&a = 参数，使用的引用
 {
     int temp;
 

@@ -1,5 +1,8 @@
-// 8.4 函数重载 程序清单8.10 P279
-// leftover.cpp -- overloading the left() function
+/**
+ * @file  leftover.cpp
+ * @brief 程序清单 -- overloading the left() function
+ * @date 2024-04
+ */
 #include <iostream>
 
 using namespace std;

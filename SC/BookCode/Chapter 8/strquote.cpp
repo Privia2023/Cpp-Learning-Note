@@ -1,5 +1,10 @@
-// 8.2.5 将引用用于类对象 程序清单8.7 P269
-// strquote.cpp -- different designs
+/**
+ * @file  strquote.cpp
+ * @brief 程序清单 -- different designs
+ * @date 2024-04
+ *
+ * version3 这个函数内部的temp是临时的，不能引用
+ */
 #include <iostream>
 #include <string>
 using namespace std;
@@ -45,7 +50,7 @@ int main()
 
     cout << "Resetting original string.\n";
     input = copy;
-    result = version3(input, "@@@");// 程序试图引用已经释放的内存
+    result = version3(input, "@@@"); // 程序试图引用已经释放的内存
     cout << "Your string enhanced: " << result << endl;
     cout << "Your original string: " << input << endl;
 

@@ -1,5 +1,8 @@
-// 8.2.6 对象、继承和引用 程序清单8.8 P272
-// filefunc.cpp -- function with ostream &parameter
+/**
+ * @file  filefunc.cpp
+ * @brief 程序清单 -- function with ostream &parameter
+ * @date 2024-04
+ */
 #include <iostream>
 #include <fstream>
 #include <cstdlib>

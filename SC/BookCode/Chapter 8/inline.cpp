@@ -1,5 +1,10 @@
-// 8.1 内联函数 程序清单 8.1 P254
-// inline.cpp -- using an inline function
+/**
+ * @file  inline.cpp
+ * @brief 程序清单8.1 -- using an inline function
+ * @date 2024-04
+ *
+ * 可以理解为c++版本的 #define
+ */
 #include <iostream>
 
 // an inline function definition
