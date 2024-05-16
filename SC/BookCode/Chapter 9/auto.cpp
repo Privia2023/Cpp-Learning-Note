@@ -1,5 +1,8 @@
-// 程序清单9.4 P306
-// auto.cpp -- illustrating scope of automatic variables
+/**
+ * @file  auto.cpp
+ * @brief 程序清单9.4 -- illustrating scope of automatic variables
+ * @date 2024-05
+ */
 #include <iostream>
 void oil(int x);
 using namespace std;
