@@ -1,6 +1,9 @@
 #include <iostream>
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
+using namespace std;
+
+int main()
+{
+    cout << "Merge Sort" << endl;
     return 0;
 }

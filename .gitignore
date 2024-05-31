@@ -1,3 +1,5 @@
+*.plist
+*.dSYM
 *.code-workspace
 *.exe
 *.o
