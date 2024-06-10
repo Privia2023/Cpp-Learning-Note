@@ -1,6 +1,7 @@
 *.plist
 *.dSYM
-*.code-workspace
+*.sln
+*.vcxproj
 *.exe
 *.o
 a.out
