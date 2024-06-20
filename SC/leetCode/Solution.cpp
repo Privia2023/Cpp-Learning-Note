@@ -1,8 +1,7 @@
 #include "Solution.h"
-#include <unordered_map>
-#include <unordered_set>
 
-int arraySolution::binarySearch(vector<int> &nums, int target)
+
+int arraySolution::binarySearch(vector<int>& nums, int target)
 {
 	int left = 0, right = nums.size() - 1;
 	while (left <= right)
@@ -24,7 +23,7 @@ int arraySolution::binarySearch(vector<int> &nums, int target)
 	return -1; // target not found
 }
 
-int arraySolution::removeElement(vector<int> &nums, int val)
+int arraySolution::removeElement(vector<int>& nums, int val)
 {
 	int slowIndex = 0;
 	for (int fastIndex = 0; fastIndex < nums.size(); fastIndex++)
@@ -37,7 +36,7 @@ int arraySolution::removeElement(vector<int> &nums, int val)
 	return slowIndex;
 }
 
-vector<int> arraySolution::sortedSquares(vector<int> &A)
+vector<int> arraySolution::sortedSquares(vector<int>& A)
 {
 	int k = A.size() - 1;
 	vector<int> result(A.size(), 0);
@@ -57,7 +56,7 @@ vector<int> arraySolution::sortedSquares(vector<int> &A)
 	return result;
 }
 
-int arraySolution::minSubArrayLen(int s, vector<int> &nums)
+int arraySolution::minSubArrayLen(int s, vector<int>& nums)
 {
 	int res = INT32_MAX;
 	int i = 0;
@@ -111,15 +110,15 @@ vector<vector<int>> arraySolution::generateMatrix(int n)
 	return res;
 }
 
-LinkListSolution::ListNode *LinkListSolution::removeElements(ListNode *head, int val)
+LinkListSolution::ListNode* LinkListSolution::removeElements(ListNode* head, int val)
 {
 	dummyhead = head->next;
-	ListNode *cur = dummyhead;
+	ListNode* cur = dummyhead;
 	while (cur->next != NULL)
 	{
 		if (cur->next->val == val)
 		{
-			ListNode *tmp = cur->next;
+			ListNode* tmp = cur->next;
 			cur->next = cur->next->next;
 			delete tmp;
 		}
@@ -139,7 +138,7 @@ int LinkListSolution::get(int index)
 	{
 		return -1;
 	}
-	ListNode *cur = dummyhead;
+	ListNode* cur = dummyhead;
 	while (index--)
 	{
 		cur = cur->next;
@@ -149,15 +148,15 @@ int LinkListSolution::get(int index)
 
 void LinkListSolution::addAtHead(int val)
 {
-	ListNode *newNode = new ListNode(val);
+	ListNode* newNode = new ListNode(val);
 	newNode->next = dummyhead->next;
 	dummyhead->next = newNode;
 	size++;
 }
 void LinkListSolution::addAtTail(int val)
 {
-	ListNode *newNode = new ListNode(val);
-	ListNode *cur = dummyhead;
+	ListNode* newNode = new ListNode(val);
+	ListNode* cur = dummyhead;
 	while (cur->next != NULL)
 	{
 		cur = cur->next;
@@ -176,8 +175,8 @@ void LinkListSolution::addAtIndex(int index, int val)
 	{
 		return;
 	}
-	ListNode *newNode = new ListNode(val);
-	ListNode *cur = dummyhead;
+	ListNode* newNode = new ListNode(val);
+	ListNode* cur = dummyhead;
 	while (index--)
 	{
 		cur = cur->next;
@@ -193,12 +192,12 @@ void LinkListSolution::deleteAtIndex(int index)
 	{
 		return;
 	}
-	ListNode *cur = dummyhead;
+	ListNode* cur = dummyhead;
 	while (index--)
 	{
 		cur = cur->next;
 	}
-	ListNode *tmp = cur->next;
+	ListNode* tmp = cur->next;
 	cur->next = cur->next->next;
 	delete tmp;
 	tmp = NULL;
@@ -207,7 +206,7 @@ void LinkListSolution::deleteAtIndex(int index)
 
 void LinkListSolution::printLinkedList()
 {
-	ListNode *cur = dummyhead;
+	ListNode* cur = dummyhead;
 	while (cur->next != NULL)
 	{
 		cout << cur->next->val << " ";
@@ -216,11 +215,11 @@ void LinkListSolution::printLinkedList()
 	cout << endl;
 }
 
-LinkListSolution::ListNode *LinkListSolution::reverseList(ListNode *head)
+LinkListSolution::ListNode* LinkListSolution::reverseList(ListNode* head)
 {
-	ListNode *tmp;
-	ListNode *cur = head;
-	ListNode *pre;
+	ListNode* tmp;
+	ListNode* cur = head;
+	ListNode* pre;
 	while (cur)
 	{
 		tmp = cur->next;
@@ -231,31 +230,31 @@ LinkListSolution::ListNode *LinkListSolution::reverseList(ListNode *head)
 	return pre;
 }
 
-LinkListSolution::ListNode *LinkListSolution::swapPairs(ListNode *head)
+LinkListSolution::ListNode* LinkListSolution::swapPairs(ListNode* head)
 {
-	ListNode *_dummyhead = new ListNode(0);
+	ListNode* _dummyhead = new ListNode(0);
 	_dummyhead->next = head;
-	ListNode *cur = _dummyhead;
+	ListNode* cur = _dummyhead;
 	while (cur->next != NULL && cur->next->next != NULL)
 	{
-		ListNode *tmp = cur->next;
-		ListNode *tmp1 = cur->next->next->next;
+		ListNode* tmp = cur->next;
+		ListNode* tmp1 = cur->next->next->next;
 		cur->next = cur->next->next;
 		cur->next->next = tmp;
 		cur->next->next->next = tmp1;
 		cur = cur->next->next;
 	}
-	ListNode *result = _dummyhead->next;
+	ListNode* result = _dummyhead->next;
 	delete _dummyhead;
 	return result;
 }
 
-LinkListSolution::ListNode *LinkListSolution::removeNthFromEnd(ListNode *head, int n)
+LinkListSolution::ListNode* LinkListSolution::removeNthFromEnd(ListNode* head, int n)
 {
-	ListNode *_dummuyhead = new ListNode(0);
+	ListNode* _dummuyhead = new ListNode(0);
 	_dummuyhead->next = head;
-	ListNode *fast = _dummuyhead;
-	ListNode *slow = _dummuyhead;
+	ListNode* fast = _dummuyhead;
+	ListNode* slow = _dummuyhead;
 	while (n-- && fast != NULL)
 	{
 		fast = fast->next;
@@ -270,10 +269,10 @@ LinkListSolution::ListNode *LinkListSolution::removeNthFromEnd(ListNode *head, i
 	return _dummuyhead->next;
 }
 
-LinkListSolution::ListNode *LinkListSolution::getIntersectionNode(ListNode *headA, ListNode *headB)
+LinkListSolution::ListNode* LinkListSolution::getIntersectionNode(ListNode* headA, ListNode* headB)
 {
-	ListNode *curA = headA;
-	ListNode *curB = headB;
+	ListNode* curA = headA;
+	ListNode* curB = headB;
 	int lena = 0, lenb = 0;
 	while (curA->next)
 	{
@@ -309,18 +308,18 @@ LinkListSolution::ListNode *LinkListSolution::getIntersectionNode(ListNode *head
 	return NULL;
 }
 
-LinkListSolution::ListNode *LinkListSolution::detectCycle(ListNode *head)
+LinkListSolution::ListNode* LinkListSolution::detectCycle(ListNode* head)
 {
-	ListNode *slow = head;
-	ListNode *fast = head;
+	ListNode* slow = head;
+	ListNode* fast = head;
 	while (fast != NULL && fast->next != NULL)
 	{
 		slow = slow->next;
 		fast = fast->next->next;
 		if (fast == slow)
 		{
-			ListNode *index1 = fast;
-			ListNode *index2 = head;
+			ListNode* index1 = fast;
+			ListNode* index2 = head;
 			while (index1 != index2)
 			{
 				index1 = index1->next;
@@ -334,7 +333,7 @@ LinkListSolution::ListNode *LinkListSolution::detectCycle(ListNode *head)
 
 bool HashSolution::isAnagram(string s, string t)
 {
-	int record[26] = {0};
+	int record[26] = { 0 };
 	for (int i = 0; i < s.size(); i++)
 	{
 		record[s[i] - 'a']++;
@@ -353,10 +352,10 @@ bool HashSolution::isAnagram(string s, string t)
 	return true;
 }
 
-vector<int> HashSolution::intersection(vector<int> &nums1, vector<int> &nums2)
+vector<int> HashSolution::intersection(vector<int>& nums1, vector<int>& nums2)
 {
 	unordered_set<int> res;
-	unordered_set<int> _nums1;
+	unordered_set<int> _nums1(nums1.begin(), nums1.end());
 	for (int num : nums2)
 	{
 		if (_nums1.find(num) != _nums1.end())
@@ -397,7 +396,7 @@ bool HashSolution::isHappy(int n)
 		n = sum;
 	}
 }
-vector<int> HashSolution::twoSum(vector<int> &nums, int target)
+vector<int> HashSolution::twoSum(vector<int>& nums, int target)
 {
 	unordered_map<int, int> map;
 	for (int i = 0; i < nums.size(); i++)
@@ -405,14 +404,14 @@ vector<int> HashSolution::twoSum(vector<int> &nums, int target)
 		auto iter = map.find(target - nums[i]);
 		if (iter != map.end())
 		{
-			return {iter->second, i};
+			return { iter->second, i };
 		}
 		map.insert(pair<int, int>(nums[i], i));
 	}
 	return {};
 }
 
-int HashSolution::fourSumCount(vector<int> &A, vector<int> &B, vector<int> &C, vector<int> &D)
+int HashSolution::fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D)
 {
 	unordered_map<int, int> map;
 	for (int a : A)
@@ -437,22 +436,124 @@ int HashSolution::fourSumCount(vector<int> &A, vector<int> &B, vector<int> &C, v
 }
 bool HashSolution::canConstruct(string ransomNote, string magazine)
 {
-	int record[26] = {0};
+	int record[26] = { 0 };
 	if (ransomNote.size() > magazine.size())
 	{
 		return false;
 	}
-	for (int i = 0; i < ransomNote.size(); i++)
+	for (int i = 0; i < magazine.length(); i++)
 	{
-		record[ransomNote[i] - 'a']++;
+		record[magazine[i] - 'a']++;
 	}
-	for (int i = 0; i < magazine.size(); i++)
+	for (int i = 0; i < ransomNote.length(); i++)
 	{
-		record[magazine[i] - 'a']--;
+		record[ransomNote[i] - 'a']--;
 		if (record[ransomNote[i] - 'a'] < 0)
 		{
 			return false;
 		}
 	}
 	return true;
+}
+
+vector<vector<int>> HashSolution::threeSum(vector<int>& nums)
+{
+	vector<vector<int>> res;
+	sort(nums.begin(), nums.end());
+	for (int i = 0; i < nums.size(); i++)
+	{
+		if (nums[i] > 0)
+		{
+			break;
+		}
+		if (i > 0 && nums[i] == nums[i - 1])
+		{
+			continue;
+		}
+		int left = i + 1;
+		int right = nums.size() - 1;
+		while (right > left)
+		{
+			int sum = nums[i] + nums[left] + nums[right];
+			if (sum > 0)
+			{
+				right--;
+			}
+			else if (sum < 0)
+			{
+				left++;
+			}
+			else
+			{
+				res.push_back(vector<int>{nums[i], nums[left], nums[right]});
+				while (right > left && nums[right] == nums[right - 1])
+				{
+					right--;
+				}
+				while (right > left && nums[left] == nums[left + 1])
+				{
+					left++;
+				}
+				right--;
+				left++;
+			}
+		}
+	}
+	return res;
+}
+
+vector<vector<int>> HashSolution::fourSum(vector<int>& nums, int target)
+{
+	vector<vector<int>> res;
+	sort(nums.begin(), nums.end());
+	for (int k = 0; k < nums.size(); k++)
+	{
+		if (nums[k] > target && nums[k] >= 0)
+		{
+			break;
+		}
+		if (k > 0 && nums[k] == nums[k - 1])
+		{
+			continue;
+		}
+		for (int i = k + 1; i < nums.size(); i++)
+		{
+			if (nums[i] + nums[k] > target && nums[i] + nums[k] >= 0)
+			{
+				break;
+			}
+			if (i > k + 1 && nums[i] == nums[i - 1])
+			{
+				continue;
+			}
+			int right = nums.size() - 1;
+			int left = i + 1;
+			while (right > left)
+			{
+				long sum = (long)(nums[k] + nums[i] + nums[left] + nums[right]);
+				if (sum > 0)
+				{
+					right--;
+				}
+				else if (sum < 0)
+				{
+					left++;
+				}
+				else {
+					res.push_back(vector<int>{nums[k], nums[i], nums[left], nums[right]});
+					while (right > left && nums[right] == nums[right - 1])
+					{
+						right--;
+					}
+					while (right > left && nums[left] == nums[left + 1])
+					{
+						left++;
+					}
+					right--;
+					left++;
+				}
+			}
+		}
+	}
+	return res;
 }
