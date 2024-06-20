@@ -1,3 +1,5 @@
+cmake-build-debug/
+CMakeLists.txt
 *.plist
 *.dSYM
 *.sln
