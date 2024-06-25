@@ -238,13 +238,24 @@ void _f_no_change(const double arr[], int n);
 
 首先看一个指向常量的指针：
 
-![image-20210804171314723](https://static.fungenomics.com/images/2021/08/image-20210804171314723.png)
+```Cpp
+int age = 39;
+const int* pt = &age;
+```
 
-这里要求 `pt` 指向的是一个 `const int`，所以，赋值之后我们是不能用 `*pt` 来修改 age 的值的。
+>[!TIP]
+这里要求 `pt` 指向的是一个 `const int`，所以，赋值之后我们是不能用 `*pt` 来修改 age 的值的，但是pt的声明并不限定着它指向的值就必须得是一个常量，只是对pt来说，这个值是常量。例如，pt指向age，但age不是const。我们是可以直接通过 age 变量来修改 age 的值的，但不能使用 pt 指针来修改它。
 
-现在来看一个微妙的问题。pt的声明并不限定着它指向的值就必须得是一个常量，只是对pt来说，这个值是常量。例如，pt指向age，但age不是const。我们是可以直接通过 age 变量来修改 age 的值的，但不能使用 pt 指针来修改它。
+```Cpp
+*pt = 20;//无效
+age = 20;//有效
+```
 
-![image-20210804171429933](https://static.fungenomics.com/images/2021/08/image-20210804171429933.png)
+**另一种使用`const`的方式使无法修改指针的值：**
+```Cpp
+int sloth = 3;
+int* const finger = &sloth;
+```
 
 用一个例子来总结：
 ```Cpp
@@ -280,15 +291,15 @@ using namespace std;
 int main()
 {
     float g_earth = 9.8;
-    const float* px = &g_earth;
+    const float* pm = &g_earth;
     
-    //float** pt = &px;//无效，禁止将const地址赋给非const指针
+    //float** pt = &pm;//无效，禁止将const地址赋给非const指针
     
     return 0;
 }
 ```
 
-C++禁止第二种情况的原因很简单——如果将 `g_moon` 的地 址赋给 `pm`，那么就可以用 `pm` 来修改 `g_moon` 的值，这使得 `g_moon` 的 `const` 状态很荒谬。
+C++禁止第二种情况的原因很简单，如果将 `g_moon` 的地 址赋给 `pt`，那么就可以用 `pt` 来修改 `g_moon` 的值，这使得 `pm` 的 `const` 状态很荒谬。
 
 **假设有一个由 `const` 数据组成的数组则禁止将常量数组的地址赋给非常量指针将意味着不能将数组名作为参数传递给使用非常量形参的函数。**
 
@@ -301,14 +312,6 @@ C++禁止第二种情况的原因很简单——如果将 `g_moon` 的地 址赋
 `const` 实参，否则将只能接受非 `const` 数据。
 
 `const` 只能防止修改 `pt` 指向的值，而不能防止修改 `pt` 的值。也就是说，可以将一个新地址赋给 `pt`。
-
-第二种使用 `const` 的方式使得无法修改指针的值：
-
-![image-20210804172355209](https://static.fungenomics.com/images/2021/08/image-20210804172355209.png)
-
-> 这样的指针，我想将其称为：**静止指针**。指针本身定死在一个地址上了，但是地址里的内容是可以通过这个指针随便修改的。
-
-![image-20210804172525799](https://static.fungenomics.com/images/2021/08/image-20210804172525799.png)
 
 通常，将指针作为函数参数来传递时，可以使用指向 `const`的指针来保护数据。
 
