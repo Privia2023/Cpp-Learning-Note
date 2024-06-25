@@ -705,7 +705,7 @@ int main()
 array<typeName, num_element> arr;
 ```
 举个例子：
-```
+```Cpp
 #include <iostream>
 #include <array>
 
