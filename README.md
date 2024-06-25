@@ -10,11 +10,14 @@
 ## 下载
 
 《C++ Primer Plus（第6版）中文版》 PDF文件下载链接：
-
+Onedrive网盘：
 ```
 https://1drv.ms/b/s!AsgzATN6SnKsgj8bQwBmgZzKpjMy?e=XXY3tI
 ```
-
+123网盘：
+```
+https://www.123pan.com/s/pGBTTd-GJ313.html
+```
 全书一共 18 章，外加 10 章附录，pdf 文件大小 157.06 MB。
 
 
