@@ -673,6 +673,21 @@ STL 标准库中的模板类 `vector` 和 `array` 是数组的替代品。
 #include<vector>
 vector<typeName> v_name(number);
 ```
+举个例子：
+```Cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+	vector<string> fruits = {"apple","orange","pear"};//Vector数组的一种初始化方式
+	cout << fruits[0];//调用方式与正常数组无异
+	return 0;
+	
+}
+```
 
 这样 v_name 就是一个 vector 对象，但 number 不是必须的。
 
@@ -688,6 +703,21 @@ vector<typeName> v_name(number);
 #include<array>
 
 array<typeName, num_element> arr;
+```
+举个例子：
+```
+#include <iostream>
+#include <array>
+
+using namespace std;
+
+int main()
+{
+	array<double, 10> values = { 0.5, 1.0, 1.5, 2.0 };//Array数组的一种初始化方式，等号可选
+	cout << values[0];//调用方式与正常数组无异
+	return 0;
+	
+}
 ```
 
 与创建 `vector` 对象不同的是，n_element 不能是变量，必须是固定的常量和普通数组要求一样。
