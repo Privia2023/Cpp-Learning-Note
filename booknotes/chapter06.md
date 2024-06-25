@@ -221,7 +221,22 @@ int main() {
 
 虽然头文件 `iostream` 提供了一个预先定义好的名为 `cout` 的 `ostream` 对象，但您必须声明自己的 `ofstream` 对象，为其命名，并将其同文件关联起来。
 
-![image-20210729232741786](https://static.fungenomics.com/images/2021/07/image-20210729232741786.png)
+```
+#include <iostream>
+#include <fstream>//加载c++用于文件读写的头文件
+using namespace std;
+int main()
+{
+	ofstream outFile;//实例化ofstream类，创建outFile对象，outFile是对象名字，可以随便取，以后的操作就是对outFile对象进行的
+	outFile.open(“filename.txt”);//调用outFile对象中的open函数，作用是将outFile对象与文件进行关联，参数是文件名，如果filename.txt不存在，则自动创建一个叫filename.txt的文件并与其关联。注：open()函数的参数可以是字符串也可是字符数组（如：char name[];outFile.open(name)）
+	//警告：如果打开一个已存在的文件，这个文件里现存的所有内容都会丢失！！！
+	outFile << "Man!\nWhat can I say?\nMamba out!\n" << endl;//向文件进行写入，因为cout其实也是ofstream类的一个对象，所以凡是能用于cout的也一样可以用于outFile，两者用法类似
+	outFile.close();//使用完文件后应该将其关闭，如果不加此段代码，程序正常终止时会自动将它关闭。但作为程序员，我还是建议你用完就关，避免不必要的错误
+	
+	return 0;
+
+}
+```
 
 注意，方法`open()` 只接受C-风格字符串作为参数，这可以是一个 字面字符串，也可以是存储在数组中的字符串。
 
