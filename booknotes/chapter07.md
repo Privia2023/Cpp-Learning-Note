@@ -46,8 +46,8 @@ int max(int num1, int num2);
 int main ()
 {
    // 局部变量声明
-   int a = 100;
-   int b = 200;
+   int a = 114514;
+   int b = 1919810;
    int ret;
  
    // 调用函数来获取最大值
