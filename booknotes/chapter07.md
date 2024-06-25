@@ -28,9 +28,26 @@
 函数定义通用格式：
 
 ```Cpp
-void functionName(parameterList) {
+return_type function_name(parameter_list)
+{
     statement(s);
     return;
+}
+```
+举个例子:
+```Cpp
+// 函数返回两个数中较大的那个数
+int max(int num1, int num2) 
+{
+   // 局部变量声明
+   int result;
+ 
+   if (num1 > num2)
+      result = num1;
+   else
+      result = num2;
+ 
+   return result; 
 }
 ```
 
@@ -48,7 +65,7 @@ C++ 对于返回值的类型有一定的限制：**不能是数组**，但可以
 原型描述了函数到编译器的接口，也就是说，它将函数返回值的类型（如果有的话）以及参数的类型和数量告诉编译器。举个例子：
 
 ```Cpp
-double volume = cube(side);
+int BetterOne = max(int1,int2);
 ```
 
 首先，原型告诉编译器，`cube()` 有一个 double 参数。如果程序没有 提供这样的参数，原型将让编译器能够捕获这种错误。其次，`cube()` 函数完成计算后，将把返回值放置在指定的位置——可能是 CPU 寄存器， 也可能是内存中。然后调用函数（这里为 `main()`）将从这个位置取得返回值。由于原型指出了 `cube()` 的类型为 double，因此编译器知道应检索多少个字节以及如何解释它们。如果没有这些信息，编译器将只能进行猜测，而编译器是不会这样做的。
