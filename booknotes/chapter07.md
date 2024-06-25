@@ -237,25 +237,34 @@ void _f_no_change(const double arr[], int n);
 将 `const` 用于指针有一些很微妙的地方，可以用两种不同的方式将 `const` 关键字用于指针。**第一种方法是让指针指向一个常量对象**，防止使用该指针来修改所指向的值，**第二种方法是将指针本身声明为常量**，这样可以防止改变指针指向的位置。
 
 首先看一个指向常量的指针：
-
+>[!TIP]
+这里要求 pt 指向的是一个 const int，所以，赋值之后我们是不能用 *pt 来修改 age 的值的，但是pt的声明并不限定着它指向的值就必须得是一个常量，只是对pt来说，这个值是常量。例如，pt指向age，但age不是const。我们是可以直接通过 age 变量来修改 age 的值的，但不能使用 pt 指针来修改它。
 ```Cpp
 int age = 39;
 const int* pt = &age;
-```
-
->[!TIP]
-这里要求 `pt` 指向的是一个 `const int`，所以，赋值之后我们是不能用 `*pt` 来修改 age 的值的，但是pt的声明并不限定着它指向的值就必须得是一个常量，只是对pt来说，这个值是常量。例如，pt指向age，但age不是const。我们是可以直接通过 age 变量来修改 age 的值的，但不能使用 pt 指针来修改它。
-
-```Cpp
-*pt = 20;//无效
 age = 20;//有效
+*pt = 20;//无效
 ```
 
 **另一种使用`const`的方式使无法修改指针的值：**
 ```Cpp
-int sloth = 3;
-int* const finger = &sloth;
+int #include <iostream>
+using namespace std;
+int main()
+{
+	int score = 3;
+	int members = 10;
+	int cxk = 12;
+	int* const px = &score;
+	*px = 5;//有效
+	*px = cxk //有效，此时cxk被赋值为10，*px所指向的score被修改为10
+	//*px = &members;//无效, 已经初始化的typename* const指针无法指向另一个变量
+
+	return 0;
+}
 ```
+>[!TIP]
+这里的`*px`指针与上面的`*pt`指针有所不同，我们可以通过`*pt`来修改 score 的值，但是不能让指针`*px`指向另一个变量。
 
 用一个例子来总结：
 ```Cpp
@@ -285,7 +294,6 @@ int main()
 >[!WARNING]
 >禁止将 const 的地址赋给非 const 指针!
 ```Cpp
-//禁止将 const 的地址赋给非 const 指针
 #include <iostream>
 using namespace std;
 int main()
