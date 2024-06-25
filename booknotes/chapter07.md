@@ -248,7 +248,30 @@ void _f_no_change(const double arr[], int n);
 
 ![image-20210804171429933](https://static.fungenomics.com/images/2021/08/image-20210804171429933.png)
 
-> 我觉得这类指针可以称为：**只读指针**。这个指针可以移动，但是它只能读出它所指向地址的内容，但是无法通过这个指针修改其中的数据。
+用一个例子来总结：
+```Cpp
+#include <iostream>
+using namespace std;
+int main()
+{
+	int age = 39;
+	int test = 38;
+	const int* pt = &age;
+	int* const px = &age;
+	
+
+	pt = &test;//有效，允许const int*指针指向另一个位置
+	//*pt = 50;//无效，不允许通过const int*指针修改变量值
+	
+	*px = 40;//有效，允许通过int* const指针修改变量值（修改age为40)
+	//px = &test;//无效，不允许int* const指针指向另一个位置
+	
+	cout <<"age: "<< age << endl;//检查age修改结果
+	cout <<"*pt = " << * pt << endl;//打印*pt指向的变量
+
+	return 0;
+}
+```
 
 ![image-20210804171526205](https://static.fungenomics.com/images/2021/08/image-20210804171526205.png)
 
