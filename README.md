@@ -19,7 +19,7 @@ https://1drv.ms/b/s!AsgzATN6SnKsgj8bQwBmgZzKpjMy?e=XXY3tI
 ```
 https://www.123pan.com/s/pGBTTd-GJ313.html
 ```
-全书一共 18 章，外加 10 章附录，pdf 文件大小 157.06 MB。
+全书一共 18 章，外加 10 章附录，PDF 文件大小 157.06 MB。
 
 
 <p align="center"><a> ---- START ---- </a></p>
