@@ -221,7 +221,7 @@ int main() {
 
 虽然头文件 `iostream` 提供了一个预先定义好的名为 `cout` 的 `ostream` 对象，但您必须声明自己的 `ofstream` 对象，为其命名，并将其同文件关联起来。
 
-```
+```Cpp
 #include <iostream>
 #include <fstream>//加载c++用于文件读写的头文件
 using namespace std;
@@ -237,6 +237,7 @@ int main()
 
 }
 ```
+最后，你可以在Cpp源文件同目录下找到filename.txt文件。
 
 注意，方法`open()` 只接受C-风格字符串作为参数，这可以是一个 字面字符串，也可以是存储在数组中的字符串。
 
