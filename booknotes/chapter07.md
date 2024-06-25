@@ -270,8 +270,11 @@ int main()
 	return 0;
 }
 ```
-**禁止将 const 的地址赋给非 const 指针**
+
+>[!WARNING]
+>禁止将 const 的地址赋给非 const 指针!
 ```Cpp
+//禁止将 const 的地址赋给非 const 指针
 #include <iostream>
 using namespace std;
 int main()
