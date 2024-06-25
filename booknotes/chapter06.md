@@ -279,7 +279,7 @@ int main()
 	inFile.open("filename.txt");//调用inFile对象中的open函数，作用是将inFile对象与文件进行关联，参数是文件名,注：open()函数的参数可以是字符串也可是字符数组（如：char name[];inFile.open(name)）。此处假设打开上面写入的文件
 	if(!inFile.is_open())//对文件是否打开进行检测，如果这个文件不存在，会导致后面使用inFile对象时失败。在代码很多的情况下，一定要加上这个，不然可能都找不到错误在哪里，设计程序一定要有这样的思想。检查文件是否被打开至关重要
 	{
-		exit(EXIT_FAILURE;
+	    exit(EXIT_FAILURE);
 	}
 	inFile >> word;//读取文件内容，将读取到的内容赋值给word数组，如遇到EOF、最后一次读取的字符的类型不匹配、文件受损等情况会返回fail()
 	cout << word << endl;//输出word数组查看是否成功读取文件
