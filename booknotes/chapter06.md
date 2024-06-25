@@ -268,7 +268,6 @@ int main()
 - 可以结合使用 `ifstream` 和 `eof()`、`fail()` 等方法来判断输入是否成功；
 - `ifstream` 对象本身被用作测试条件时，如果最后一个读取操作成 功，它将被转换为布尔值 `true`，否则被转换为 `false`。
 
-程序例子：
 ```Cpp
 #include <iostream>
 #include <fstream>//加载c++用于文件读写的头文件
