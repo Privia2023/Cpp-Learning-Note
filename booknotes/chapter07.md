@@ -232,8 +232,10 @@ void show_array(const double arr[], int n);
 在这个例子中，对数组进行的第三项操作是将每个元素与同一个重新评估因子相乘。需要给函数传递3个参数：因子、数组和元素数目。 该**函数不需要返回值**，因此其代码如下：
 
 ```Cpp
-void revalue(double r, double arr[], int n) {
-    for (int i=0; i < n; ++i) {
+void revalue(double r, double arr[], int n)
+{
+    for (int i=0; i < n; ++i)
+    {
         arr[i] *= r;
     }
 }
