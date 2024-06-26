@@ -276,6 +276,7 @@ void _f_no_change(const double arr[], int n);
 int age = 39;
 const int* pt = &age;
 age = 20;//有效
+
 *pt = 20;//无效
 ```
 
