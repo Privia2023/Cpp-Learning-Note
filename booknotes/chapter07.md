@@ -129,7 +129,40 @@ side 是一个变量，被调用时，该函数将创建一个新的名为x的do
 
 函数可以有多个参数。在调用函数时，只需使用逗号将这些参数分开即可。
 
-![image-20210804150422862](https://static.fungenomics.com/images/2021/08/image-20210804150422862.png)
+```Cpp
+//twoArgs.cpp -- 有两个参数的函数
+#include <iostream>
+void n_chars(char, int);//参数名可选，void n_chars(char a, int b);也正确，同时a和b在这里并不作为变量，只是方便记忆
+
+using namespace std;
+int main()
+{
+	int times;
+	char ch;
+	cout << "Enter a character:";
+	cin >> ch;
+	while (ch != 'q')//输入'q'以退出程序
+	{
+		cout << "Enter a integer:";
+		cin >> times;
+		n_chars(ch, times);//将ch和times传给n_chars函数
+		cout << "\nTenter another character or press the q-key to quit:";
+		cin >> ch;
+	}
+	cout << "The value of times is " << times << ".\n";
+	cout << "Bye.\n";
+
+	return 0;
+}
+
+void n_chars(char c, int n)//这里的c，n与上面的函数原型参数不同，有实际性意义
+{
+	while (n-- > 0)
+	{
+		cout << c;
+	}
+}
+```
 
 它使用 `cin>>ch`，而不是 `cin.get(ch)`或 `ch = cin.get()`来读取一个字符。这样做是有原因的。前面讲过，这两个 `cin.get()` 函数读取所有的输入字符，包括空格和换行符，而 `cin>>` 跳过空格和换行符。当用户对程序提示作出响应时，必须在每行的最后按 `Enter` 键，以生成换行符。`cin>>ch` 方法可以轻松地**跳过这些换行符**，但当输入的下一个字符为数字时，`cin.get()` 将读取后面的换行符，虽然可以通过编程来避开这种麻烦，但比较简便的方法是像该程序那样使用 `cin`。
 
