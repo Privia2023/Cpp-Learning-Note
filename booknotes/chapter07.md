@@ -276,8 +276,8 @@ void _f_no_change(const double arr[], int n);
 int age = 39;
 const int* pt = &age;
 age = 20;//有效
-
 *pt = 20;//无效
+
 ```
 
 **另一种使用`const`的方式使无法修改指针的值：**
