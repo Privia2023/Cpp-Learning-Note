@@ -272,12 +272,12 @@ void _f_no_change(const double arr[], int n);
 首先看一个指向常量的指针：
 >[!TIP]
 这里要求 pt 指向的是一个 const int，所以，赋值之后我们是不能用 *pt 来修改 age 的值的，但是pt的声明并不限定着它指向的值就必须得是一个常量，只是对pt来说，这个值是常量。例如，pt指向age，但age不是const。我们是可以直接通过 age 变量来修改 age 的值的，但不能使用 pt 指针来修改它。
+
 ```Cpp
 int age = 39;
 const int* pt = &age;
 age = 20;//有效
 *pt = 20;//无效
-
 ```
 
 **另一种使用`const`的方式使无法修改指针的值：**
