@@ -189,7 +189,7 @@ cookies == &cookies[0];   // array name is the address of first element
 其中，cookies是数组名，而根据C++规则，cookies的地址是其第一个元素的地址，因此函数传递的是地址。由于数组的元素类型为int，因此cookies的类型必须为int指针。然而，数组表示法`int arr[]`提醒用户，arr不仅指向int，还指向int数组的int的第一个int。
 
 >[!TIP]
-当指针指向数组的第一-个元素时，建议使用数组表示法；当指针指向一个独立的值时，建议使用指针表示法。
+当指针指向数组的第一个元素时，建议使用数组表示法；当指针指向一个独立的值时，建议使用指针表示法。
 
 >[!WARNING]
 当且仅当在函数头中或者函数原型中，`int *arr` 和 `int arr[]` 的含义是相同的。它们都指 arr 是一个 int 指针。
