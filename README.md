@@ -1,4 +1,5 @@
-# C++ Learning Note(Chinese only)
+# C++ Learning Note
+*Chinese only*
 >[!TIP]
 本项目是以《C++ Primer Plus（第6版）中文版》为依托的学习仓库，包括笔记和所给出的课后练习答案。这是最有名的 C++ 入门书之一，内容系统、易读。笔记以此书为依托，但并不完全与书本内容相同。
 
