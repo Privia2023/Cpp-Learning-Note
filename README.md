@@ -27,7 +27,7 @@ https://www.123pan.com/s/pGBTTd-GJ313.html
 ## 目录
 
 **第 I 部分 : C++ 基础**
-- [第 01 章 ： 预备知识]| ([笔记](booknotes/chapter01.md))
+- 第 01 章 ： 预备知识| ([笔记](booknotes/chapter01.md))
 - [第 02 章 : 开始学习C++](practice/chapter02/README.md)
 - [第 03 章 : 处理数据，数据类型](practice/chapter03/README.md) | ([笔记](booknotes/chapter03.md))
 - [第 04 章 : 复合类型](practice/chapter04/README.md) | ([笔记](booknotes/chapter04.md))
