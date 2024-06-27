@@ -1,10 +1,10 @@
 # C++ Learning Note
 *目前仅提供简体中文*
 
-*Currently, only Chinese Simplified Chinese is available*
+*Currently, only Chinese Simplified Chinese is available.*
 
 >[!TIP]
-本项目是以《C++ Primer Plus（第6版）中文版》为依托的学习仓库，包括笔记和所给出的课后练习答案。这是最有名的 C++ 入门书之一，内容系统、易读。笔记以此书为依托，但并不完全与书本内容相同。
+本项目是以《C++ Primer Plus（第6版）中文版》为依托小的学习仓库，包括笔记和所给出的课后练习答案。这是最有名的 C++ 入门书之一，内容系统、易读。笔记以此书为依托，但并不完全与书本内容相同。如果觉得项目对你有帮助，欢迎Star和Fork。
 
 ![C++ Primer Plus](https://static.fungenomics.com/images/2021/07/c-primer-plus6.jpg)
 
