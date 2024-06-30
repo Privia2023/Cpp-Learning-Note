@@ -6,7 +6,7 @@
 >[!TIP]
 本项目是以《C++ Primer Plus（第6版）中文版》为依托的学习仓库，包括笔记和所给出的课后练习答案。这是最有名的 C++ 入门书之一，内容系统、易读。笔记以此书为依托，但并不完全与书本内容相同。如果觉得项目对你有帮助，欢迎Star和Fork！
 
-![C++ Primer Plus](https://static.fungenomics.com/images/2021/07/c-primer-plus6.jpg)
+![C++ Primer Plus](https://camo.githubusercontent.com/04a4e993d30d3b81464c300cee8672ab7f7ae5e3f2815860bf509c1a7502d186/68747470733a2f2f7374617469632e66756e67656e6f6d6963732e636f6d2f696d616765732f323032312f30372f632d7072696d65722d706c7573362e6a7067)
 
 ## 下载
 
