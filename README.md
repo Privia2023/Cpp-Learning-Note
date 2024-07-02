@@ -35,7 +35,7 @@ https://www.123pan.com/s/pGBTTd-GJ313.html
 - [第 05 章 : 循环和关系表达式](Practise/chapter05/README.md) | ([笔记](BookNotes/chapter05.md))
 - [第 06 章 : 分支语句和逻辑运算符](Practise/chapter06/README.md) | ([笔记](BookNotes/chapter06.md))
 - [第 07 章 : 函数](Practise/chapter07/README.md) | ([笔记](BookNotes/chapter07.md))
-- [第 08 章 : 函数幽探](Practise/chapter08/README.md) | ([笔记](BookNotes/chapter08.md))
+- [第 08 章 : 函数探幽](Practise/chapter08/README.md) | ([笔记](BookNotes/chapter08.md))
 - [第 09 章 : 内存模型和名称空间](Practise/chapter09/README.md) | ([笔记](BookNotes/chapter09.md))
 
 **第 II 部分 : 类设计者的工具**
