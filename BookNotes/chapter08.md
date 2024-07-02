@@ -105,16 +105,20 @@ int main()
 	int& number2 = number1;
 	int number3 = number1;
 
-	cout << "number2: " << number2 << endl;
-	cout << "number3: " << number3 << endl;
+	cout << "number2: " << number2 << endl;//打印输出为3
+	cout << "number3: " << number3 << endl;//打印输出为3
+	cout << &number1 << endl;//内存地址为000000000014FCB4
+	cout << &number2 << endl;//内存地址为000000000014FCB4
+	cout << &number3 << endl;//内存地址为000000000014FCB4
 
 	return 0;
 }
 ```
+从这段程序中不难看出，`number2`和`number3`的输出值都是3，但是它们的内存地址不同。所以，引用变量不会为你在栈内存中申请一块新的内存，而是指向一块已被申请的内存。换句话说，`number1`和`number2`指向的都是同一块内存空间。
+>你可以理解为一块已经被别名为"Huawei"的房子又被别名为"Honor"，别人提及二者之一都是指这栋房子。
 
-
-
-引用更接近const指针，必须在创建时进行初始化，一旦与某个变量关联起来，就将一直效忠于它。也就是说：**某个变量的引用是不可更改的**。
+>[!TIP]
+>引用更接近const指针，必须在创建时进行初始化，一旦与某个变量关联起来，就将一直效忠于它。也就是说：**某个变量的引用是不可更改的**。
 
 > **引用是别名。**
 
