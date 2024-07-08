@@ -1,0 +1,2693 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../chapter04/">
+      
+      
+        <link rel="next" href="../chapter06/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
+    
+    
+      
+        <title>第五章 循环和关系表达式 - C++ Learning Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="C++ Learning Note" class="md-header__button md-logo" aria-label="C++ Learning Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            C++ Learning Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第五章 循环和关系表达式
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Privia2023/Cpp-Learning-Note" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Privia2023/Cpp-Learning-Note
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="C++ Learning Note" class="md-nav__button md-logo" aria-label="C++ Learning Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    C++ Learning Note
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Privia2023/Cpp-Learning-Note" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Privia2023/Cpp-Learning-Note
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++ Learning Note
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    BookNotes
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            BookNotes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第一章 预备知识
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter02/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第二章 开始学习 C++
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter03/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第三章 处理数据
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter04/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第四章 复合类型
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    第五章 循环和关系表达式
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    第五章 循环和关系表达式
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 for 循环
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 for 循环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1 for 循环初始化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2 回到for循环
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.3 修改步长
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#514-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.4 使用for循环访问字符串
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#515" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.5 递增运算符（++）和递减运算符（−−）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#516" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.6 副作用和顺序点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#517" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.7 前缀格式和后缀格式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#518" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.8 递增/递减运算符和指针
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#519" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.9 组合赋值运算符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5110" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.10 复合语句（语句块）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5111" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.11 其他语法技巧—逗号运算符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5112" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.12 关系表达式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5113" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.13 赋值、比较和可能犯的错误
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5114-c-" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.14 C-风格字符串的比较
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5115-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.15 比较string类字符串
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 while 循环
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 while 循环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521-for-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.1 for 与 while
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.2 等待一段时间：编写延时循环
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#do-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      do while 循环
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-forc11" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 基于范围的for循环（C++11）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5 循环和文本输入
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 循环和文本输入">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#551-cin" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.1 使用原始的cin进行输入
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#552-cingetchar" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.2 使用cin.get(char)进行补救
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#553-cinget" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.3 使用哪一个cin.get( )
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#554" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.4 文件尾条件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#555-cinget" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.5 另一个cin.get( )版本
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6 嵌套循环和二维数组
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7 总结
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第六章 分支语句和逻辑运算符
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter07/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第七章 函数——C++的编程模块
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第八章 函数探幽
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第九章 内存模型和名称空间
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十章 对象和类
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十一章 使用类
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter12/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十二章 类和动态内存分配
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter13/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十三章 类继承
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十四章 C++中的代码重用
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter15/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十五章 友元、异常和其他
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter16/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十六章 string类和标准模板库
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter17/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十七章 输入、输出和文件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter18/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十八章 探讨C++新标准
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Practise
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Practise
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/attention/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    本文档记录 C++ 编程过程中需要特别注意的事项
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter02
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter02
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter02/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第 2 章 《开始学习C++》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter03/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第 3 章 《处理数据》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter04
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter04
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter04/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第四章 《复合类型》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter05
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter05
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter05/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第五章 《循环和关系表达式》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter06
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter06
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter06/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第六章 《分支语句和逻辑运算符》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter07
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter07
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter07/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第七章 《函数——C++的编程模块》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter08
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter08
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter08/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第八章 《函数深探》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter09
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter09
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter09/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第九章 《内存模型和名字空间》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter10
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter10
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十章 《对象和类》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter11
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter11
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第11章 《使用类》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_12" id="__nav_3_12_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter12
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_12">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter12
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter12/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第九章 《类和动态内存分配》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_13" id="__nav_3_13_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter13
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_13">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter13
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter13/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第13章 《类继承 》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_14" id="__nav_3_14_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter14
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_14">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter14
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter14/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第14章 《C++中的代码重用 》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_15" id="__nav_3_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter15
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_15">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter15
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter15/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第15章 《友元、异常和其他》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_16" id="__nav_3_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter16
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_16">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter16
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter16/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第16章 《string类和标准模板库》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_17" id="__nav_3_17_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter17
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_17">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter17
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter17/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第17章 《输入、输出和文件》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_18" id="__nav_3_18_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter18
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_18">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter18
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Practise/chapter18/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第18章 《探讨C++新标准》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 for 循环
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 for 循环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1 for 循环初始化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2 回到for循环
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.3 修改步长
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#514-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.4 使用for循环访问字符串
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#515" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.5 递增运算符（++）和递减运算符（−−）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#516" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.6 副作用和顺序点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#517" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.7 前缀格式和后缀格式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#518" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.8 递增/递减运算符和指针
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#519" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.9 组合赋值运算符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5110" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.10 复合语句（语句块）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5111" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.11 其他语法技巧—逗号运算符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5112" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.12 关系表达式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5113" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.13 赋值、比较和可能犯的错误
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5114-c-" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.14 C-风格字符串的比较
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5115-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.15 比较string类字符串
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 while 循环
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 while 循环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521-for-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.1 for 与 while
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.2 等待一段时间：编写延时循环
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#do-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      do while 循环
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-forc11" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 基于范围的for循环（C++11）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5 循环和文本输入
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 循环和文本输入">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#551-cin" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.1 使用原始的cin进行输入
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#552-cingetchar" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.2 使用cin.get(char)进行补救
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#553-cinget" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.3 使用哪一个cin.get( )
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#554" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.4 文件尾条件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#555-cinget" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.5 另一个cin.get( )版本
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6 嵌套循环和二维数组
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7 总结
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">第五章 循环和关系表达式</h1>
+<p>本章内容包括：</p>
+<ul>
+<li>for 循环；</li>
+<li>表达式和语句；</li>
+<li>递增运算符和递减运算符： ++ 和 --；</li>
+<li>组合赋值运算符；</li>
+<li>复合语句（语句块）；</li>
+<li>逗号运算符；</li>
+<li>关系运算符：&gt;、&gt;=、==、&lt;=、&lt; 和 !=；</li>
+<li>while 循环；</li>
+<li>typedef 工具；</li>
+<li>do while 循环；</li>
+<li>字符输入方法 get() ；</li>
+<li>文件尾条件；</li>
+<li>嵌套循环和二维数组。</li>
+</ul>
+<h2 id="51-for">5.1 for 循环</h2>
+<h3 id="511-for">5.1.1 for 循环初始化</h3>
+<p>for循环为执行重复的操作提供了循序渐进的步骤。组成部分完成下面这些步骤：</p>
+<ul>
+<li>设置初始值；</li>
+<li>执行测试，判断循环是否应当继续进行；</li>
+<li>执行循环操作；</li>
+<li>更新用于测试的值。</li>
+</ul>
+<p>初始化、测试和更 新操作构成了控制部分，这些操作由括号括起。其中每部分都是一个表 达式，彼此由分号隔开。控制部分后面的语句叫作循环体，只要测试表 达式为true，它便被执行：</p>
+<pre><code class="language-Cpp">for (initialization; test-expression; update-expression)
+    body;
+</code></pre>
+<p>循环体如果大于一条语句，需要加花括号：</p>
+<pre><code class="language-Cpp">for (initialization; test-expression; update-expression) {
+    body;
+}
+</code></pre>
+<p>C++语法将整个for看作一条语句—虽然循环体可以包含一条或多条 语句。循环只执行一次初始化。</p>
+<p><code>for</code> 是一个 C++ 关键字，编译器不会将 <code>for</code> 视为一个函 数，这还将防止将函数命名为 <code>for</code>。</p>
+<p><img alt="image-20210727003613922" src="https://static.fungenomics.com/images/2021/07/image-20210727003613922.png" /></p>
+<blockquote>
+<p>【编程风格 Tips】C++ 常用的方式是，在 for 和括号之间加上一个空格，但省略函数名与括号之间的空格。</p>
+</blockquote>
+<p>看这个表达式赋值逻辑：</p>
+<pre><code class="language-Cpp">x = y = z = 0;
+</code></pre>
+<p><strong>赋值运算符是从右向左结合的</strong>，因此首先将0赋给z，然 后将z = 0赋给y，依此类推。</p>
+<p>C++在C循环的基础上添加了一项特性，要求对for循环句法做一些 微妙的调整。</p>
+<p>这是原来的句法：</p>
+<pre><code class="language-Cpp">for (expresson; expression; expression)
+    statement;
+</code></pre>
+<p>但，C++循环允许像下面这样做：</p>
+<pre><code class="language-Cpp">for (int i=0; i&lt;5; ++i)
+</code></pre>
+<p>也就是说，可以在for循环的初始化部分中声明变量。这很方便，但并不适用于原来的句法，因为声明不是表达式。这个变量的生存时间只存在于for语句中，也就是说，当程序离开循环后，<code>i</code> 这个变量将消失。</p>
+<h3 id="512-for">5.1.2 回到for循环</h3>
+<p>很简单，略。</p>
+<h3 id="513">5.1.3 修改步长</h3>
+<p>循环示例每一轮循环都将循环计数加1或减1。可以通 过修改更新表达式来修改步长，例如改为表达式 <code>i = i + by</code>，其中 <code>by</code> 是用户选择的步长值。</p>
+<h3 id="514-for">5.1.4 使用for循环访问字符串</h3>
+<p>很简单，略。</p>
+<h3 id="515">5.1.5 递增运算符（++）和递减运算符（−−）</h3>
+<p>这两个运算符执行两种极其常见 的循环操作：将循环计数加1或减1。这两个运算符都有两种变体。前缀（prefix）版本位于操作数前 面，如++x；后缀（postfix）版本位于操作数后面，如x++。两个版本对操作数的影响是一样的，但是影响的时间不同。这就像对于钱包来说， 清理草坪之前付钱和清理草坪之后付钱的最终结果是一样的，但支付钱 的时间不同。</p>
+<p><strong>粗略地讲，a++意味着使用a的当前值计算表达式，然后将a的值加 1；而++b的意思是先将b的值加1，然后使用新的值来计算表达式。</strong> 递减操作符也同理。</p>
+<p><img alt="image-20210727010134791" src="https://static.fungenomics.com/images/2021/07/image-20210727010134791.png" /></p>
+<h3 id="516">5.1.6 副作用和顺序点</h3>
+<p>C++就递增运算符何时生效的哪些方面做了规 定，哪些方面没有规定。首先，副作用（side effect）指的是在计算表达式时对某些东西（如存储在变量中的值）进行了修改；顺序点 （sequence point）是程序执行过程中的一个点，在这里，进入下一步之 前将确保对所有的副作用都进行了评估。在C++中，<strong>语句中的分号就是 一个顺序点</strong>，这意味着程序处理下一条语句之前，赋值运算符、递增运算符和递减运算符执行的所有修改都必须完成。</p>
+<p>另外，任何完整的表达式末尾都是一个顺序点。</p>
+<p>何为完整表达式呢？它是这样一个表达式：不是另一个更大表达式 的子表达式。完整表达式的例子有：表达式语句中的表达式部分以及用 作while循环中检测条件的表达式。</p>
+<p><img alt="image-20210727010733540" src="https://static.fungenomics.com/images/2021/07/image-20210727010733540.png" /></p>
+<h3 id="517">5.1.7 前缀格式和后缀格式</h3>
+<p>如果变量被用于某些目的（如用作函数参数或给变量赋 值），使用前缀格式和后缀格式的结果将不同。</p>
+<p>然而，虽然选择使用前缀格式还是后缀格式对程序的行为没有影 响，但执行速度可能有细微的差别。对于内置类型和当代的编译器而 言，这看似不是什么问题。然而，C++允许您针对类定义这些运算符， 在这种情况下，用户这样定义前缀函数：将值加1，然后返回结果；但后缀版本首先复制一个副本，将其加1，然后将复制的副本返回。因 此，对于类而言，前缀版本的效率比后缀版本高。</p>
+<h3 id="518">5.1.8 递增/递减运算符和指针</h3>
+<p>可以将递增运算符用于指针和基本变量。将递增 运算符用于指针时，将把指针的值增加其指向的数据类型占用的字节数，这种规则适用于对指针递增和递减。</p>
+<p>前缀递增、前缀递减和解引用运算符的优先级相同，以从右到左的方式进行结合。后缀递增和后缀递减的优先级相同，但比前缀运算符的优先级高，这两个运算符以从左到右的方式进行结合。</p>
+<p>前缀运算符的从右到到结合规则意味着 <code>*++pt</code> 的含义如下：现将 <code>++</code> 应用于 <code>pt</code>（因为 <code>++</code> 位于 <code>*</code> 的右边），然后将 <code>*</code> 应用于被递增后的 <code>pt</code>。 另一方面，<code>++*pt</code> 意味着先取得 <code>pt</code> 指向的值，然后将这个值加 1，<code>pt</code> 依然指向原来的地址；</p>
+<p>而这个组合 <code>(*pt)++</code> 圆括号指出，首先对指针解引用，得到值。然后，运算符++将这个值递增 1，但 <code>pt</code> 仍然指在原来的地址。 </p>
+<h3 id="519">5.1.9 组合赋值运算符</h3>
+<p><code>+=</code> 运算符将两个操作数相加，并将结果赋给左边的操作数。这意味着左边的操作数必须能够被赋值，如变量、数组元素、结构体成员或通过对指针解引用来标识的数据。</p>
+<p><img alt="image-20210727012040437" src="https://static.fungenomics.com/images/2021/07/image-20210727012040437.png" /></p>
+<p><img alt="image-20210727012104165" src="https://static.fungenomics.com/images/2021/07/image-20210727012104165.png" /></p>
+<h3 id="5110">5.1.10 复合语句（语句块）</h3>
+<p>只有这个地方要注意：假设对循环体进行了缩进，但省略了花括号，编译器将忽略缩进，因此只有第一条语句位于循环中。</p>
+<p><img alt="image-20210727012230040" src="https://static.fungenomics.com/images/2021/07/image-20210727012230040.png" /></p>
+<h3 id="5111">5.1.11 其他语法技巧—逗号运算符</h3>
+<p>语句块允许把两条或更多条语句放到按C++句法 只能放一条语句的地方。逗号运算符对表达式完成同样的任务，允许将 两个表达式放到C++句法只允许放一个表达式的地方。如：</p>
+<pre><code class="language-Cpp">++j, --i你  // 没有分号，合法，但不能独立运行，要在另外语句中，如 for 里
+</code></pre>
+<p><img alt="image-20210727012641834" src="https://static.fungenomics.com/images/2021/07/image-20210727012641834.png" /></p>
+<p>但逗号并不总是逗号运算符。 如：</p>
+<pre><code class="language-Cpp">int i, j; // 个声明中的逗号将变量列 表中相邻的名称分开
+</code></pre>
+<p>到目前为止，逗号运算符最常见的用途是将两个或更多的表达式放 到一个for循环表达式中。不过C++还为这个运算符提供了另外两个特 性。首先，它确保先计算第一个表达式，然后计算第二个表达式（换句 话说，逗号运算符是一个顺序点）。</p>
+<pre><code class="language-Cpp">i = 20, j = 2 * i   // 这是合法的，这里 y 是 40
+</code></pre>
+<p>在所有运算符中，逗号运算符的优先级是最低的。</p>
+<p><img alt="image-20210727013030988" src="https://static.fungenomics.com/images/2021/07/image-20210727013030988.png" /></p>
+<h3 id="5112">5.1.12 关系表达式</h3>
+<p><img alt="image-20210727013059937" src="https://static.fungenomics.com/images/2021/07/image-20210727013059937.png" /></p>
+<h3 id="5113">5.1.13 赋值、比较和可能犯的错误</h3>
+<p>很简单，略。</p>
+<h3 id="5114-c-">5.1.14 C-风格字符串的比较</h3>
+<p>假设要知道字符数组中的字符串是不是mate。如果word是数组名， 下面的测试可能并不能像我们预想的那样工作：</p>
+<pre><code class="language-Cpp">word == &quot;mate&quot;
+</code></pre>
+<p>请记住，数组名是数组的地址。同样，用引号括起的字符串常量也 是其地址。因此，上面的关系表达式不是判断两个字符串是否相同，而 是查看它们是否存储在相同的地址上。两个字符串的地址是否相同呢？ 回答是否定的，虽然它们包含相同的字符。</p>
+<p>由于C++将C-风格字符串视为地址，因此如果使用关系运算符来比 较它们，将无法得到满意的结果。需要用 C 字符串库中的 strcmp() 函数来比较。 该函数接受两个字符串地址作为参数。这意味着 参数可以是指针、字符串常量或字符数组名。如果两个字符串相同，该 函数将返回零；如果第一个字符串按字母顺序排在第二个字符串之前， 则strcmp( )将返回一个负数值；如果第一个字符串按字母顺序排在第二 个字符串之后，则strcpm( )将返回一个正数值。实际上，“按系统排列顺 序”比“按字母顺序”更准确。这意味着字符是根据字符的系统编码来进 行比较的。例如，使用ASCII码时，所有大写字母的编码都比小写字母 小，所以按排列顺序，大写字母将位于小写字母之前。因此，字符 串“Zoo”在字符串“aviary”之前。</p>
+<p>存储在不同长度的数组 中的字符串彼此不相等。但是C-风格字符串是通过结尾的空值字符定义 的，而不是由其所在数组的长度定义的。这意味着两个字符串即使被存 储在长度不同的数组中，也可能是相同的。</p>
+<p><img alt="image-20210727014019373" src="https://static.fungenomics.com/images/2021/07/image-20210727014019373.png" /></p>
+<h3 id="5115-string">5.1.15 比较string类字符串</h3>
+<p>如果使用string类字符串而不是C-风格字符串，比较起来将简单些。直接通过运算符比较：&gt;, &lt;, == 等。</p>
+<h2 id="52-while">5.2 while 循环</h2>
+<p><code>while</code> 循环是一个没有初始化和更新部分的 <code>for</code> 循环，它只有测试条件和循环体，与for循环一样，循环体也由一条语句或两个花括号定义的语句块组成。句法如下：</p>
+<pre><code class="language-Cpp">while (test-condition)
+    body
+</code></pre>
+<p>如果循环体有多条语句，需要花括号：</p>
+<pre><code class="language-Cpp">while (test-condition) {
+    body
+}
+</code></pre>
+<p>首先，程序计算圆括号内的测试条件（test-condition）表达式。如 果该表达式为true，则执行循环体中的语句。执行完循环体后，程序返 回测试条件，对它进行重新评估。如果该条件为非零，则再次执行循环 体。测试和执行将一直进行下去，直到测试条件为false为止。</p>
+<p>while 循环和 for 循环一样，也是一 种入口条件循环。因此，如果测试条件一开始便为false，则程序将不会 执行循环体。</p>
+<p><img alt="image-20210727121115868" src="https://static.fungenomics.com/images/2021/07/image-20210727121115868.png" /></p>
+<h3 id="521-for-while">5.2.1 for 与 while</h3>
+<p>在C++中，for 和 while 循环本质上是相同的。</p>
+<p><img alt="image-20210727121739245" src="https://static.fungenomics.com/images/2021/07/image-20210727121739245.png" /></p>
+<p>但它们之间存在三个差别：</p>
+<ul>
+<li>在 <code>for</code> 循环中省略了测试条件时，将认为条件为 <code>true</code>；</li>
+<li>在 <code>for</code> 循环中，可使用初始化语句声明一个局部变量，但在 <code>while</code> 循环中不能这样做；</li>
+<li>如果循环体中包括 <code>continue</code> 语句，情况将稍有不同，<code>continue</code> 语句将在第6章讨论。</li>
+</ul>
+<p>通常，程序员使用 <code>for</code> 循环来为循环计数，因为 <code>for</code> 循环格式允许将所有相关的信息—初始值、终止值和更新计数器的方法—放在同一个地方。在无法预先知道循环将执行的次数时，程序员常使用 <code>while</code> 循环。</p>
+<h3 id="522">5.2.2 等待一段时间：编写延时循环</h3>
+<p>函数 <code>clock()</code> 可以返回程序开始执行后所用的系统时间。但，首先，clock( )返回时间的单位不一定是秒；其次，该函数的返回类 型在某些系统上可能是long，在另一些系统上可能是unsigned long或其 他类型。</p>
+<p>头文件 <code>ctime</code> 提供了这些问题的解决方案。首先，它定义了一个符号常量—<code>CLOCKS_PER_SEC</code>，该常量等于 每秒钟包含的系统时间单位数。因此，将系统时间除以这个值，可以得 到秒数。或者将秒数乘以 <code>CLOCK_PER_SEC</code>，可以得到以系统时间单位 为单位的时间。其次，<code>ctime</code> 将 <code>clock_t</code> 作为 <code>clock()</code> 返回类型的别名，这意味着可以将变量声明为 <code>clock_t</code> 类型，编译器将把它转换为long、unsigned int 或适合系统的其他类型。</p>
+<p><img alt="image-20210727133448815" src="https://static.fungenomics.com/images/2021/07/image-20210727133448815.png" /></p>
+<h2 id="do-while">do while 循环</h2>
+<p>它 不同于另外两种循环，因为它是出口条件（exit condition）循环。这意 味着这种循环将首先执行循环体，然后再判定测试表达式，决定是否应 继续执行循环。如果条件为false，则循环终止；否则，进入新一轮的执 行和测试。这样的循环通常至少执行一次，循环体是一条语句或用括号括起的语句块。句法：</p>
+<pre><code class="language-Cpp">do {
+    body
+} while (test-condition);
+</code></pre>
+<p><img alt="image-20210727135803904" src="https://static.fungenomics.com/images/2021/07/image-20210727135803904.png" /></p>
+<h2 id="54-forc11">5.4 基于范围的for循环（C++11）</h2>
+<p>C++11新增了一种循环：基于范围（range-based）的for循环。这简化了一种常见的循环任务：对数组（或容器类，如vector和array）的每 个元素执行相同的操作。</p>
+<h2 id="55">5.5 循环和文本输入</h2>
+<h3 id="551-cin">5.5.1 使用原始的cin进行输入</h3>
+<p>为什么程序在输出时省略了空格呢？原因 在cin。读取char值时，与读取其他基本类型一样，cin将忽略空格和换行 符。因此输入中的空格没有被回显，也没有被包括在计数内。</p>
+<p>更为复杂的是，发送给cin的输入被缓冲。这意味着只有在用户按 下回车键后，他输入的内容才会被发送给程序。这就是在运行该程序 时，可以在#后面输入字符的原因。按下回车键后，整个字符序列将被 发送给程序，但程序在遇到#字符后将结束对输入的处理。</p>
+<h3 id="552-cingetchar">5.5.2 使用cin.get(char)进行补救</h3>
+<p>通常，逐个字符读取输入的程序需要检查每个字符，包括空格、制 表符和换行符。<code>cin</code> 所属的 <code>istream</code> 类（在 <code>iostream</code> 中定义）中包含一个能 够满足这种要求的成员函数。具体地说，成员函数cin.get(ch)读取输入 中的下一个字符（即使它是空格），并将其赋给变量ch。使用这个函数 调用替换cin&gt;&gt;ch，可以修补程序清单5.16的问题。</p>
+<p><img alt="image-20210727161504704" src="https://static.fungenomics.com/images/2021/07/image-20210727161504704.png" /></p>
+<blockquote>
+<p>在C语言中， 要修改变量的值，必须将变量的地址传递给函数。但程序清单5.17调用 cin.get( )时，传递的是ch，而不是&amp;ch。在C语言中，这样的代码无效， 但在C++中有效，只要函数将参数声明为引用即可。引用是C++在C语 言的基础上新增的一种类型。头文件iostream将cin.get(ch)的参数声明为 引用类型，因此该函数可以修改其参数的值。</p>
+</blockquote>
+<h3 id="553-cinget">5.5.3 使用哪一个cin.get( )</h3>
+<p>函数重载允许创建多个同名函数，条件是它们 的参数列表不同。例如，如果在C++中使用 <code>cin.get(name，ArSize)</code>， 则编译器将找到使用 <code>char*</code> 和 <code>int</code> 作为参数的 <code>cin.get()</code> 版本；如果使用 <code>cin.get(ch)</code>，则编译器将使用接受一个 <code>char</code> 参数的版本；如果没有提 供参数，则编译器将使用不接受任何参数的<code>cin.get()</code> 版本。函数重载允 许对多个相关的函数使用相同的名称，这些函数以不同方式或针对不同类型执行相同的基本任务。</p>
+<h3 id="554">5.5.4 文件尾条件</h3>
+<p>如果输入来自于文件，则可以使用一种功能更强大的技 术—检测文件尾（EOF）。C++输入工具和操作系统协同工作，来检测文件尾并将这种信息告知程序。</p>
+<p>检测到EOF后，cin将两位（eofbit和failbit）都设置为1。可以通过 成员函数eof( )来查看eofbit是否被设置；如果检测到EOF，则cin.eof( )将 返回bool值true，否则返回false。同样，如果eofbit或failbit被设置为1， 则fail( )成员函数返回true，否则返回false。</p>
+<p><img alt="image-20210727162259773" src="https://static.fungenomics.com/images/2021/07/image-20210727162259773.png" /></p>
+<h3 id="555-cinget">5.5.5 另一个cin.get( )版本</h3>
+<p>为成功地使用cin.get( )，需要知道其如何处理EOF条件。当该函数 到达EOF时，将没有可返回的字符。相反，cin.get( )将返回一个用符号 常量EOF表示的特殊值。该常量是在头文件iostream中定义的。EOF值 必须不同于任何有效的字符值，以便程序不会将EOF与常规字符混淆。 通常，EOF被定义为值−1，因为没有ASCII码为−1的字符，但并不需要知道实际的值，而只需在程序中使用EOF即可。</p>
+<p><img alt="image-20210727162823543" src="https://static.fungenomics.com/images/2021/07/image-20210727162823543.png" /></p>
+<p><img alt="image-20210727163014040" src="https://static.fungenomics.com/images/2021/07/image-20210727163014040.png" /></p>
+<p>另一方面，使用cin.get(ch)（有一个参数）进行输入时，将不会导 致任何类型方面的问题。前面讲过，cin.get(char)函数在到达EOF时，不 会将一个特殊值赋给ch。事实上，在这种情况下，它不会将任何值赋给 ch。ch不会被用来存储非char值。</p>
+<p><img alt="image-20210727163117901" src="https://static.fungenomics.com/images/2021/07/image-20210727163117901.png" /></p>
+<p>那么应使用cin.get( )还是cin.get(char)呢？使用字符参数的版本更符 合对象方式，因为其返回值是istream对象。这意味着可以将它们拼接起 来。例如，下面的代码将输入中的下一个字符读入到ch1中，并将接下 来的一个字符读入到ch2中:</p>
+<pre><code class="language-Cpp">cin.get(ch1).get(ch2);
+</code></pre>
+<h2 id="56">5.6 嵌套循环和二维数组</h2>
+<p>C++没有提供二维数组类型，但用户可以创建每个元素本身都是数 组的数组。可以这样声明数组：</p>
+<pre><code class="language-Cpp">
+int maxtemps[4][5];
+</code></pre>
+<p><img alt="image-20210727163540362" src="https://static.fungenomics.com/images/2021/07/image-20210727163540362.png" /></p>
+<p><img alt="image-20210727163623327" src="https://static.fungenomics.com/images/2021/07/image-20210727163623327.png" /></p>
+<p><img alt="image-20210727163905902" src="https://static.fungenomics.com/images/2021/07/image-20210727163905902.png" /></p>
+<p>假设要打印数组所有的内容，可以用一个for循环来改变行，用另一 个被嵌套的for循环来改变列：</p>
+<pre><code class="language-Cpp">for (int row = 0; row &lt; 4; ++row) {
+    for (int col=0; col &lt; 5; ++col) {
+        cout &lt;&lt; maxtemps[row][col] &lt;&lt; &quot;\t&quot;;
+    }
+    cout &lt;&lt; endl;
+}
+</code></pre>
+<blockquote>
+<p>实际上，我更喜欢用 vector 来创建动态二维数据，只要创建 vector 的vector 就行，用起来更简单。</p>
+</blockquote>
+<h2 id="57">5.7 总结</h2>
+<p>C++提供了3种循环：for循环、while循环和do while循环。如果循环 测试条件为true或非零，则循环将重复执行一组指令；如果测试条件为 false或0，则结束循环。for循环和while循环都是入口条件循环，这意味 着程序将在执行循环体中的语句之前检查测试条件。do while循环是出 口条件循环，这意味着其将在执行循环体中的语句之后检查条件。</p>
+<p>关系表达式对两个值进行比较，常被用作循环测试条件。关系表达 式是通过使用6种关系运算符之一构成的：<code>&lt;</code>、<code>&lt;=</code>、<code>==</code>、<code>&gt;=</code>、<code>&gt;</code> 或 <code>!=</code>。 关系表达式的结果为bool类型，值为true或false。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ad660dcc.min.js"></script>
+      
+    
+  </body>
+</html>
