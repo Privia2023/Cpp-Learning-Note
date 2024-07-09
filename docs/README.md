@@ -8,7 +8,7 @@
 
 ![C++ Primer Plus](https://camo.githubusercontent.com/04a4e993d30d3b81464c300cee8672ab7f7ae5e3f2815860bf509c1a7502d186/68747470733a2f2f7374617469632e66756e67656e6f6d6963732e636f6d2f696d616765732f323032312f30372f632d7072696d65722d706c7573362e6a7067)
 
-## 下载
+## 资源下载
 
 《C++ Primer Plus（第6版）中文版》 PDF文件下载链接：
 
@@ -25,7 +25,7 @@ https://www.123pan.com/s/pGBTTd-GJ313.html
 
 <p align="center"><a> ---- START ---- </a></p>
 
-## 目录
+## 书本目录
 
 **第 I 部分 : C++ 基础**
 

@@ -10,6 +10,7 @@ markdown_extensions:
   - pymdownx.superfences
 theme:
   name: material
+  language: zh
   icon:
     admonition:
       note: octicons/tag-16
