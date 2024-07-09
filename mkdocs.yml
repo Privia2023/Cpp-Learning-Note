@@ -11,6 +11,13 @@ markdown_extensions:
 theme:
   name: material
   language: zh
+  highlightjs: true
+  hljs_languages:
+    - yaml
+    - python
+    - cpp
+    - c
+    
   icon:
     admonition:
       note: octicons/tag-16
