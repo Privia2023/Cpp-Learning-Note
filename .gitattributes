@@ -1,2 +1,9 @@
-*.html linguist-language = Cpp
-*.js linguist-language = Cpp
+*.md linguist-language=Cpp 
+*.yml linguist-language=Cpp 
+*.html linguist-language=Cpp 
+*.js linguist-language=Cpp 
+*.xml linguist-language=Cpp
+*.css linguist-language=Cpp 
+*.sql linguist-language=Cpp
+*.uml linguist-language=Cpp 
+*.cmd linguist-language=Cpp 
