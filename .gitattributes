@@ -1,1 +1,2 @@
 *.html linguist-language = Cpp
+*.js linguist-language = Cpp
