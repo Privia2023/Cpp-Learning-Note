@@ -6,8 +6,7 @@ repo_name: Privia2023/Cpp-Learning-Note
 
 theme:
   name: material
-  logo: images/favicon.png
-  code: monaco
+
   palette:
 
     # Palette toggle for light mode
