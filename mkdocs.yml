@@ -1,5 +1,32 @@
 site_name: C++ Learning Note
+site_url: https://privia2023.github.io/Cpp-Learning-Note/
+site_author: Privia2023(SudakaLemonTea@outlook.com)
 repo_url: https://github.com/Privia2023/Cpp-Learning-Note
 repo_name: Privia2023/Cpp-Learning-Note
-theme :
-  name : material
+
+theme:
+  name: material
+  logo: images/favicon.png
+  code: monaco
+  palette:
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
