@@ -53,7 +53,8 @@ int main() {
 
 
 const int ar_size = 100;
-int main() {
+int main() 
+{
     using namespace std;
 
     array<long double, ar_size> factorials;
@@ -93,7 +94,8 @@ int main() {
     double s = 0;
     double ch;
 
-    while (1) {
+    while (true) 
+    {
 
         cout << "Enter a number (int/double) (0 to exit): ";
         cin >> ch;
