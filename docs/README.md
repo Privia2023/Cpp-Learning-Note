@@ -30,7 +30,7 @@ https://www.123pan.com/s/pGBTTd-GJ313.html
 **第 I 部分 : C++ 基础**
 
 - 第 01 章 : 预备知识 | ([笔记](Notes/Chapter01.md))
-- [第 02 章 : 开始学习C++](Exercises/Chapter02/README.md)
+- [第 02 章 : 开始学习C++](Exercises/Chapter02/README.md) | ([笔记](Notes/Chapter02.md))
 - [第 03 章 : 处理数据，数据类型](Exercises/Chapter03/README.md) | ([笔记](Notes/Chapter03.md))
 - [第 04 章 : 复合类型](Exercises/Chapter04/README.md) | ([笔记](Notes/Chapter04.md))
 - [第 05 章 : 循环和关系表达式](Exercises/Chapter05/README.md) | ([笔记](Notes/Chapter05.md))
