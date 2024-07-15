@@ -1,5 +1,5 @@
 # C++ Learning Note
-*目前仅提供简体中文版本。*
+**目前仅提供简体中文版本。**
 
 *Currently, only Chinese Simplified Chinese is available.*
 
