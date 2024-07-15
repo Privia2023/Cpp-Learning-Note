@@ -29,30 +29,30 @@ https://www.123pan.com/s/pGBTTd-GJ313.html
 
 **第 I 部分 : C++ 基础**
 
-- 第 01 章 : 预备知识 | ([笔记](BookNotes/chapter01.md))
-- [第 02 章 : 开始学习C++](Practise/chapter02/README.md)
-- [第 03 章 : 处理数据，数据类型](Practise/chapter03/README.md) | ([笔记](BookNotes/chapter03.md))
-- [第 04 章 : 复合类型](Practise/chapter04/README.md) | ([笔记](BookNotes/chapter04.md))
-- [第 05 章 : 循环和关系表达式](Practise/chapter05/README.md) | ([笔记](BookNotes/chapter05.md))
-- [第 06 章 : 分支语句和逻辑运算符](Practise/chapter06/README.md) | ([笔记](BookNotes/chapter06.md))
-- [第 07 章 : 函数](Practise/chapter07/README.md) | ([笔记](BookNotes/chapter07.md))
-- [第 08 章 : 函数探幽](Practise/chapter08/README.md) | ([笔记](BookNotes/chapter08.md))
-- [第 09 章 : 内存模型和名称空间](Practise/chapter09/README.md) | ([笔记](BookNotes/chapter09.md))
+- 第 01 章 : 预备知识 | ([笔记](Notes/Chapter01.md))
+- [第 02 章 : 开始学习C++](Exercises/Chapter02/README.md)
+- [第 03 章 : 处理数据，数据类型](Exercises/Chapter03/README.md) | ([笔记](Notes/Chapter03.md))
+- [第 04 章 : 复合类型](Exercises/Chapter04/README.md) | ([笔记](Notes/Chapter04.md))
+- [第 05 章 : 循环和关系表达式](Exercises/Chapter05/README.md) | ([笔记](Notes/Chapter05.md))
+- [第 06 章 : 分支语句和逻辑运算符](Exercises/Chapter06/README.md) | ([笔记](Notes/Chapter06.md))
+- [第 07 章 : 函数](Exercises/Chapter07/README.md) | ([笔记](Notes/Chapter07.md))
+- [第 08 章 : 函数探幽](Exercises/Chapter08/README.md) | ([笔记](Notes/Chapter08.md))
+- [第 09 章 : 内存模型和名称空间](Exercises/Chapter09/README.md) | ([笔记](Notes/Chapter09.md))
 
 **第 II 部分 : 类设计者的工具**
 
-- [第 10 章 : 对象和类](Practise/chapter10/README.md) | ([笔记](BookNotes/chapter10.md))
-- [第 11 章 : 使用类](Practise/chapter11/README.md) | ([笔记](BookNotes/chapter11.md))
-- [第 12 章 : 类和动态内存分配](Practise/chapter12/README.md) | ([笔记](BookNotes/chapter12.md))
-- [第 13 章 : 类继承](Practise/chapter13/README.md) | ([笔记](BookNotes/chapter13.md))
+- [第 10 章 : 对象和类](Exercises/Chapter10/README.md) | ([笔记](Notes/Chapter10.md))
+- [第 11 章 : 使用类](Exercises/Chapter11/README.md) | ([笔记](Notes/Chapter11.md))
+- [第 12 章 : 类和动态内存分配](Exercises/Chapter12/README.md) | ([笔记](Notes/Chapter12.md))
+- [第 13 章 : 类继承](Exercises/Chapter13/README.md) | ([笔记](Notes/Chapter13.md))
 
 **第 III 部分 : 高级主题和标准库**
 
-- [第 14 章 : C++中的代码重用](Practise/chapter14/README.md) | ([笔记](BookNotes/chapter14.md))
-- [第 15 章 : 友元、异常和其他](Practise/chapter15/README.md) | ([笔记](BookNotes/chapter15.md))
-- [第 16 章 : string 类和标准模板库](Practise/chapter16/README.md) | ([笔记](BookNotes/chapter16.md))
-- [第 17 章 : 输入、输出和文件](Practise/chapter17/README.md) | ([笔记](BookNotes/chapter17.md))
-- [第 18 章 : 探讨 C++ 新特性](Practise/chapter18/README.md) | ([笔记](BookNotes/chapter18.md))
+- [第 14 章 : C++中的代码重用](Exercises/Chapter14/README.md) | ([笔记](Notes/Chapter14.md))
+- [第 15 章 : 友元、异常和其他](Exercises/Chapter15/README.md) | ([笔记](Notes/Chapter15.md))
+- [第 16 章 : string 类和标准模板库](Exercises/Chapter16/README.md) | ([笔记](Notes/Chapter16.md))
+- [第 17 章 : 输入、输出和文件](Exercises/Chapter17/README.md) | ([笔记](Notes/Chapter17.md))
+- [第 18 章 : 探讨 C++ 新特性](Exercises/Chapter18/README.md) | ([笔记](Notes/Chapter18.md))
 
 <p align="center"><a> ---- END ---- </a></p>
 
