@@ -1,6 +1,6 @@
 ## myfirst.cpp
 ```cpp
-// 向控制台打印一些信息
+// mtfirst.cpp -- 向控制台打印一些信息
 
 #include <iostream> // 一条预处理命令       
 
