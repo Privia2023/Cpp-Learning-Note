@@ -42,8 +42,9 @@ theme:
     - c
   features:
     - navigation.instant 
-    - header.autohide #标头自动隐藏
-    - navigation.tabs
+    - navigation.tabs #顶栏
+    - navigation.tabs.sticky
+    - navigation.sections #文章铺开而不是折叠
     
   icon:
     admonition:
