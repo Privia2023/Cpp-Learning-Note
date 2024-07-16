@@ -9,12 +9,12 @@ int main() //函数头
 {                                
     using namespace std; // 使用命名空间std                      
         
-    cout << "Comme up and C++ me some time."<< endl;// 使用cout对象打印信息
+    cout << "Come up and C++ me some time."<< endl;// 使用cout对象打印信息
     cout << "You won't regret it! " << endl;
     // endl对象的作用是新起一行，如果不加两句话就会粘在一起
     
     // 当然，这样也是可以的，与上述语句同义：
-    // cout << "Comme up and C++ me some time.";
+    // cout << "Come up and C++ me some time.";
     // cout << endl;
     // cout << "You won't regret it! ";
     // cout << endl;
