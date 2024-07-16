@@ -40,6 +40,10 @@ theme:
     - python
     - cpp
     - c
+  features:
+    - navigation.instant 
+    - header.autohide #标头自动隐藏
+    - navigation.tabs
     
   icon:
     admonition:
@@ -74,4 +78,8 @@ theme:
         icon: material/brightness-4
         name: "切换到浅色模式"
 
+extra:
+  social:
+    - icon: fontawesome/brands/github 
+      link: https://github.com/Privia2023
 
