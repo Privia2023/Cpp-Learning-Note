@@ -45,7 +45,13 @@ theme:
     - navigation.tabs #顶栏
     - navigation.tabs.sticky
     - navigation.sections #文章铺开而不是折叠
-    
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.top
+    - navigation.tracking
+    - toc.follow
+    - toc.integrate
+
   icon:
     admonition:
       note: octicons/tag-16
