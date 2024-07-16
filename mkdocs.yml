@@ -46,7 +46,6 @@ theme:
     - navigation.tabs.sticky
     - navigation.sections #文章铺开而不是折叠
     - navigation.top
-    - navigation.tracking
     - toc.follow
     
 
@@ -83,8 +82,4 @@ theme:
         icon: material/brightness-4
         name: "切换到浅色模式"
 
-extra:
-  social:
-    - icon: fontawesome/brands/github 
-      link: https://github.com/Privia2023
 
