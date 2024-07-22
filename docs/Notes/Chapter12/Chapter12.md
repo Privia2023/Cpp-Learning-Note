@@ -17,7 +17,7 @@
 
 ### 12.1.1 复习示例和静态类成员
 
-```Cpp
+```cpp
 // strngbad.h -- flawed string class definition
 #include <iostream>
 #ifndef STRNGBAD_H_
@@ -46,7 +46,7 @@ public:
 
 ![image-20210812100941808](https://static.fungenomics.com/images/2021/08/image-20210812100941808.png)
 
-```Cpp
+```cpp
 // strngbad.cpp -- StringBad class methods
 #include <cstring>                    // string.h for some
 #include "strngbad.h"
@@ -187,7 +187,7 @@ std::ostream & operator<<(std::ostream & os, const StringBad & st)
 
 解决类设计中这种问题的方法是进行深度复制（deep copy）。也就是说，**复制构造函数应当复制字符串并将副本的地址赋给`str`成员，而不仅仅是复制字符串地址**。这样每个对象都有自己的字符串，而不是引用 另一个对象的字符串。调用析构函数时都将释放不同的字符串，而不会试图去释放已经被释放的字符串。可以这样编写`String`的复制构造函数：
 
-```Cpp
+```cpp
 String::String(const char * s)     // construct String from C string
 {
     len = std::strlen(s);          // set size
@@ -213,7 +213,7 @@ Class_name & Class_name::operator=(const Class_name &);
 
 将已有的对象赋给另一个对象时，将使用重载的赋值运算符。初始化对象时，并不一定会使用赋值运算符，而更可能是调用复制构造函数。
 
-```Cpp
+```cpp
 StringBad metoo = knot; 
 ```
 这里，`metoo` 是一个新创建的对象，被初始化为 `knot` 的值，因此使用复制构造函数。然而，正如前面指出的，实现时**也可能分两步来处理这条语句：使用复制构造函数创建一个临时对象，然后通过赋值将临时 对象的值复制到新对象中**。这就是说，初始化总是会调用复制构造函数，而使用 `=` 运算符时也可能调用赋值运算符。
@@ -232,7 +232,7 @@ StringBad metoo = knot;
 - **函数应当避免将对象赋给自身；否则，给对象重新赋值前，释放内 存操作可能删除对象的内容**；
 - 函数返回一个指向调用对象的**引用**（注意是引用，不是值也不是指针）。
 
-```Cpp
+```cpp
 // assign a String to a String
 String & String::operator=(const String & st)
 {
@@ -255,7 +255,7 @@ String & String::operator=(const String & st)
 
 新默认构造函数中：
 
-```Cpp
+```cpp
 String::String()                   // default constructor
 {
     len = 4;
@@ -267,7 +267,7 @@ String::String()                   // default constructor
 
 为什么代码为 `str=new char[1];` 而不是 `str = new char;`，这两个方式相同，但区别在于前者和类析构函数兼容，而后者不兼容。这是析构函数：
 
-```Cpp
+```cpp
 String::~String()                     // necessary destructor
 {
     --num_strings;                    // required
@@ -286,7 +286,7 @@ String::~String()                     // necessary destructor
 
 在重载时，C++将区分常量和非常量函数的特征标。
 
-```Cpp
+```cpp
 // read-write char access for non-const String
 char & String::operator[](int i)
 {
@@ -308,7 +308,7 @@ const char & String::operator[](int i) const
 
 也可以修改内容：
 
-```Cpp
+```cpp
 String means("might");
 means[0] = 'r';   // 这一句相当于 means.str[0] = 'r', 但 str 是私有成员，实际是没法在成员函数之外这样使用的。
 ```
@@ -368,7 +368,7 @@ means[0] = 'r';   // 这一句相当于 means.str[0] = 'r', 但 str 是私有成
 
 Operator<<()的返回值用于串接输出：
 
-```Cpp
+```cpp
 String s1("Good stuff");
 cout << s1 << " is comming!";
 ```
@@ -429,7 +429,7 @@ cout << (force1 + force2 = net).magval() << endl;
 ### 12.6.2 转换函数
 要将单个值转换为类类型，需要创建原型如下所示的类构造函数：
 
-```Cpp
+```cpp
 class_name(type_name value);
 ```
 

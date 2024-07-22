@@ -29,7 +29,7 @@
 
 定义一个 `Time` 类:
 
-```Cpp
+```cpp
 // mytime0.h -- Time class before operator overloading
 #ifndef MYTIME0_H_
 #define MYTIME0_H_
@@ -53,7 +53,7 @@ public:
 
 该类的定义：
 
-```Cpp
+```cpp
 #include <iostream>
 #include "mytime0.h"
 
@@ -114,7 +114,7 @@ void Time::Show() const
 
 将Time类转换为重载的加法运算符很容易，只要将`Sum()` 的名称改为 `operator +()` 即可。
 
-```Cpp
+```cpp
 // mytime1.h -- Time class before operator overloading
 #ifndef MYTIME1_H_
 #define MYTIME1_H_
@@ -138,7 +138,7 @@ public:
 
 类定义中改为：
 
-```Cpp
+```cpp
 // mytime1.cpp  -- implementing Time methods
 #include <iostream>
 #include "mytime1.h"
@@ -156,11 +156,11 @@ Time Time::operator+(const Time & t) const
 
 将该方法命令改为 `operator +()` 后，就可以使用运算符表示法：
 
-```Cpp
+```cpp
 total = coding + fixing;
 ```
 
-```Cpp
+```cpp
 // usetime1.cpp -- using the second draft of the Time class
 // compile usetime1.cpp and mytime1.cpp together
 #include <iostream>
@@ -205,14 +205,14 @@ int main()
 
 还有一些其他的操作对 `Time` 类来说是有意义的。例如，可能要将两个时间相减或将时间乘以一个因子，这需要重载减法和乘法运算符。这 和重载加法运算符采用的技术相同，即创建 `operator –()` 和 `operator *()` 方法。也就是说，将下面的原型添加到类声明中：
 
-```Cpp
+```cpp
 Time operator- (const time & t) const;
 Time operator* (double n) const;
 ```
 
 修改类定义：
 
-```Cpp
+```cpp
 // mytime2.cpp  -- implementing Time methods
 #include <iostream>
 #include "mytime2.h"
@@ -264,7 +264,7 @@ Time Time::operator*(double mult) const
 
 创建友元函数的第一步是将其原型放在类声明中，并在原型声明前 加上关键字 `friend`。
 
-```Cpp
+```cpp
 friend Time operator* (double m, const Time & t);
 ```
 
@@ -275,7 +275,7 @@ friend Time operator* (double m, const Time & t);
 
 第二步是编写函数定义。**因为它不是成员函数**，所以不要使用 `Time::` 限定符。另外，不要在定义中使用关键字 `friend`，定义应该如下：
 
-```Cpp
+```cpp
 Time operator*(double mult) {
     Time result;
     long totalminutes = hours * mult * 60 + minutes * mult;
@@ -291,7 +291,7 @@ Time operator*(double mult) {
 
 ### 11.3.2 常用的友元：重载 `<<` 运算符
 
-```Cpp
+```cpp
 // mytime3.h -- Time class with friends
 #ifndef MYTIME3_H_
 #define MYTIME3_H_
@@ -330,7 +330,7 @@ public:
 
 ## 11.5 再谈重载：一个矢量类
 
-```Cpp
+```cpp
     // subtract Vector b from a
     Vector Vector::operator-(const Vector & b) const
     {

@@ -57,7 +57,7 @@
 
 简单地说，类声明提供了类的蓝图，而方法定义则提供了细节。例子：
 
-```Cpp
+```cpp
 // stock00.h -- Stock class interface
 // version 00
 #ifndef STOCK00_H_
@@ -113,7 +113,7 @@ public:
 
 例如：
 
-```Cpp
+```cpp
 void Stock::update(double price) {
     ....
 }
@@ -123,7 +123,7 @@ void Stock::update(double price) {
 
 类方法的第二个特点是，方法可以直接访问类的私有成员，**如同访问一个已经声明好的常用变量一样**。例如，show( ) 方法可以使用这样的代码：
 
-```Cpp
+```cpp
 
 void Stock::show()
 {
@@ -167,7 +167,7 @@ C++的目标之一是让使用类对象就像使用标准类型一样。
 
 就Stock类当前的实现而言，gift对象的company成员是没有值的。 类设计假设用户在调用任何其他成员函数之前调用acquire( )，但无法强 加这种假设。避开这种问题的方法之一是在创建对象时，自动对它进行 初始化。为此，C++提供了一个特殊的成员函数——类构造函数，专门 用于构造新对象、将值赋给它们的数据成员。名称与类名相同。例如，Stock类一个可能的构造函数是名为Stock( )的成员函 数。**构造函数的原型和函数头有一个有趣的特征——虽然没有返回值， 但没有被声明为void类型。实际上，构造函数没有声明类型**。
 
-```Cpp
+```cpp
 // stock10.h <96> Stock class declaration with constructors, destructor added
 #ifndef STOCK1_H_
 #define STOCK1_H_
@@ -199,7 +199,7 @@ public:
 
 通常定义两个构造函数：一个默认空参数，在未提供显式初始值时，用来创建对象；另一个则提供对私有变量做初始化的参数。
 
-```Cpp
+```cpp
 // stock1.cpp <96> Stock class implementation with constructors, destructor added
 #include <iostream>
 #include "stock10.h"
@@ -236,25 +236,25 @@ Stock::Stock(const std::string & co, long n, double pr)
 
 C++提供了两种使用构造函数来初始化对象的方式。第一种方式是 显式地调用构造函数：
 
-```Cpp
+```cpp
 
 Stock food = Stock("World Cabbage", 250, 1.25);
 ```
 
 另一种方式是隐式地调用构造函数：
 
-```Cpp
+```cpp
 Stock garment("Furry Mason", 50, 2.5);
 ```
 这种格式更紧凑，它与下面的显式调用等价。
 
-```Cpp
+```cpp
 Stock garment = Stock("Furry Mason", 50, 2.5);
 ```
 
 每次创建类对象（包括使用 `new` 动态分配内存）时，C++都使用类构造函数。
 
-```Cpp
+```cpp
 Stock *pstock = new Stock("Electrosgock Games", 18. 19.0);
 ```
 这条语句创建一个Stock对象，将其初始化为参数提供的值，并将 该对象的地址赋给pstock指针
@@ -266,24 +266,24 @@ Stock *pstock = new Stock("Electrosgock Games", 18. 19.0);
 
 默认构造函数是在未提供显式初始值时，用来创建对象的构造函数。如果没有提供任何构造函数，则C++将自动提供默认构造函数。它是默认构造函 数的隐式版本，不做任何工作。对于Stock类来说，默认构造函数可能 如下：
 
-```Cpp
+```cpp
 Stock::Stock() {};
 ```
 
 当且仅当没有定义任何构造函数时，编译器才会提供默 认构造函数。为类定义了构造函数后，程序员就必须为它提供默认构造 函数。如果提供了非默认构造函数（如Stock(const char * co, int n, double pr)），但没有提供默认构造函数，则下面的声明将出错：
 
-```Cpp
+```cpp
 Stock stock1;   // 没有合适的构造函数用于构造对象
 ```
 
 定义默认构造函数的方式有两种。一种是给已有构造函数的所 有参数提供默认值：
 
-```Cpp
+```cpp
 Stock(const string &co = "Error", int n=0, double pr=0);
 ```
 另一种方式是通过函数重载来定义另一个构造函数——一个没有参 数的构造函数：
 
-```Cpp
+```cpp
 Stock();
 ```
 
@@ -297,7 +297,7 @@ Stock();
 
 因此，`Stock` 类的析构函数为 `~Stock()`。另外，和构造函数一样，**析构函数也可以没有返回值和声明类型。与构造函数不同的是，析构函数没有参数**，因此 `Stock` 析构函数的原型 **必须** 是这样的：
 
-```Cpp
+```cpp
 ~Stock();
 ```
 
@@ -305,7 +305,7 @@ Stock();
 
 ### 10.3.5 改进 `Stock` 类
 
-```Cpp
+```cpp
 // usestok1.cpp -- using the Stock class
 // compile with stock10.cpp
 #include <iostream>
@@ -340,7 +340,7 @@ int main()
 
 下面的语句表明可以将一个对象赋给同类型的另一个对象：
 
-```Cpp
+```cpp
 stock2 = stock1;
 ```
 
@@ -348,7 +348,7 @@ stock2 = stock1;
 
 构造函数不仅仅可用于初始化新对象。例如，该程序的`main( )` 中包含下面的语句：
 
-```Cpp
+```cpp
 stock1 = Stock("Nifty Foods", 10, 50.0);
 ```
 stock1对象已经存在，因此这条语句不是对stock1进行初始化，而 是将新值赋给它。这是通过让构造程序创建一个新的、临时的对象，然后将其内容复制给 `stock1` 来实现的。临时对象复制完成之后，程序调用析构函数，删除该临时对象。
@@ -357,7 +357,7 @@ stock1对象已经存在，因此这条语句不是对stock1进行初始化，�
 
 输出表明，下面两条语句有根本性的差别：
 
-```Cpp
+```cpp
 Stock stock2 = Stock("Boffo Objects", 2, 2.0);
 stock1 = Stock("Nifty Foods", 10, 50.0);
 ```
@@ -370,7 +370,7 @@ stock1 = Stock("Nifty Foods", 10, 50.0);
 
 请看下面的代码片段：
 
-```Cpp
+```cpp
 const Stock land = Stock("KP", 0, 0.0);
 land.show();
 ```
@@ -380,13 +380,13 @@ land.show();
 
 需要一种新的语法来保证函数不会修改调用对象。**C++的解决方法是将 `const` 关键字放在函数的括号后面**。也就是说，`show()` 声明应像这样：
 
-```Cpp
+```cpp
 void show() const;         // promise not to change invoking object
 ```
 
 同样，函数定义的开头应像这样：
 
-```Cpp
+```cpp
 void stock::show() const {
     ...
 }
@@ -410,7 +410,7 @@ void stock::show() const {
 
 如何将方法的答案传回给调用程序呢？最直接的方法是让方法返回一个引用，该引用指向股价总值较高的对象。因此，用于比较的类方法 `topval` 的原型如下：
 
-```Cpp
+```cpp
 const Stock & topval(const Stock &s) const;
 ```
 该函数隐式地访问一个对象，而显式地访问另一个对象，并返回其 中一个对象的引用。括号中的`const` 表明，该函数不会修改被显式地访问的对象；而括号后的 `const` 表明，该函数不会修改被隐式地访问的对象。 由于该函数返回了两个 `const` 对象之一的引用，因此返回类型也应为 `const` 引用。
@@ -425,7 +425,7 @@ C++解决这种问题的方法是：使用被称为 `this` 的特殊指针。`th
 
 ![image-20210811233043535](https://static.fungenomics.com/images/2021/08/image-20210811233043535.png)
 
-```Cpp
+```cpp
 const Stock & Stock::topval(const Stock & s) const
 {
     if (s.total_val > total_val)
@@ -439,13 +439,13 @@ const Stock & Stock::topval(const Stock & s) const
 
 声明对象数组的方法与 声明标准类型数组相同。
 
-```Cpp
+```cpp
 Stock mystuff[4];
 ```
 
 可以用构造函数来初始化数组元素。在这种情况下，必须为每个元 素调用构造函数：
 
-```Cpp
+```cpp
 / create an array of initialized objects
     Stock stocks[4] = {
         Stock("NanoSmart", 12, 20.0),
@@ -469,7 +469,7 @@ Stock mystuff[4];
 
 有时候，使符号常量的作用域为类很有用。例如，类声明可能使用 字面值30来指定数组的长度，由于该常量对于所有对象来说都是相同 的，因此创建一个由所有对象共享的常量是个不错的主意。你以为可以这样：
 
-```Cpp
+```cpp
 class Bakery {
 private:
     const int Months = 12;
@@ -480,7 +480,7 @@ private:
 
 C++提供了另一种在类中定义常量的方式——使用关键字 `static`：
 
-```Cpp
+```cpp
 class Bakery {
 private:
     static const int Months = 12;

@@ -114,7 +114,7 @@ C++有“单定义规则”（One Definition Rule，ODR），该规则指出， 
 
 这种变量是这样创建的，将static限定符用于在代码块中定义的变 量。在代码块中使用static时，将导致局部变量的存储持续性为静态的。 这意味着虽然该变量只在该代码块中可用，但它在该代码块不处于活动 状态时仍然存在。因此在两次函数调用之间，静态局部变量的值将保持 不变。（静态变量适用于再生——可以用它们将瑞士银行的秘密账号传 递到下一个要去的地方）。另外，如果初始化了静态局部变量，则程序 只在启动时进行一次初始化。以后再调用函数时，将不会像自动变量那样再次被初始化。
 
-```Cpp
+```cpp
 // static.cpp -- using a static local variable
 #include <iostream>
 // constants
@@ -180,7 +180,7 @@ void strcount(const char * str)
 
 C++修改了常量类型的规则，让程序员更轻松。例如，假设将一组 常量放在头文件中，并在同一个程序的多个文件中使用该头文件。那 么，预处理器将头文件的内容包含到每个源文件中后，所有的源文件都 将包含类似下面这样的定义：
 
-```Cpp
+```cpp
 const int fingers = 10;
 const char *waring = "wak!";
 ```
@@ -224,7 +224,7 @@ C++新增了这样一种功能，即通过定义一种新的声明区域来创�
 
 using声明由被限定的名称和它前面的关键字using组成：
 
-```Cpp
+```cpp
 using Jill::fetch;        // a using declaration
 ```
 `using` 声明将特定的名称添加到它所属的声明区域中。例如 `main()` 中的 `using` 声明 `Jill::fetch` 将 `fetch` 添加到 `main()` 定义的声明区域中。完成该声明后，便可以使用名称 `fetch` 代替 `Jill::fetch`。

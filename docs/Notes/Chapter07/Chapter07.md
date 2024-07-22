@@ -28,7 +28,7 @@
 
 函数定义通用格式：
 
-```Cpp
+```cpp
 return_type function_name(parameter_list)
 {
     statement(s);
@@ -36,7 +36,7 @@ return_type function_name(parameter_list)
 }
 ```
 举个例子:
-```Cpp
+```cpp
 #include <iostream>
 using namespace std;
  
@@ -84,7 +84,7 @@ C++ 对于返回值的类型有一定的限制：**不能是数组**，但可以
 
 原型描述了函数到编译器的接口，也就是说，它将函数返回值的类型（如果有的话）以及参数的类型和数量告诉编译器。举个例子：
 
-```Cpp
+```cpp
 int ret = max(int1, int2);
 ```
 
@@ -113,7 +113,7 @@ int ret = max(int1, int2);
 
 C++通常按值传递参数，这意味着将 数值参数传递给函数，而后者将其赋给一个新的变量。
 
-```Cpp
+```cpp
 double volume = cube(side);
 ```
 
@@ -129,7 +129,7 @@ side 是一个变量，被调用时，该函数将创建一个新的名为x的do
 
 函数可以有多个参数。在调用函数时，只需使用逗号将这些参数分开即可。
 
-```Cpp
+```cpp
 //twoArgs.cpp -- 有两个参数的函数
 #include <iostream>
 void n_chars(char, int);//参数名可选，void n_chars(char a, int b);也正确，同时a和b在这里并不作为变量，只是方便记忆
@@ -169,7 +169,7 @@ void n_chars(char c, int n)//这里的c，n与上面的函数原型参数不同�
 
 需要将数组名作为参数传递给它，为使函数通用，而不限于特定长度的数组，还需要传递数组长度。
 
-```Cpp
+```cpp
 int sum_arr(int arr[], int n);
 ```
 
@@ -179,7 +179,7 @@ int sum_arr(int arr[], int n);
 
 在大多数情况下，C++和C语言一样，也将数组名视为指针。C++将数组名解释为其第一个元素的地址：
 
-```Cpp
+```cpp
 cookies == &cookies[0];   // array name is the address of first element
 ```
 
@@ -194,7 +194,7 @@ cookies == &cookies[0];   // array name is the address of first element
 
 对于数组，以下两个语句是恒等的：
 
-```Cpp
+```cpp
 arr[i] == *(arr+i);  // values in two notations
 &arr[i] == arr + i;  // addresses in two notations
 ```
@@ -219,7 +219,7 @@ arr[i] == *(arr+i);  // values in two notations
 
 创建显示数组内容的函数很简单。只需将数组名和填充的元素数目传递给函数，然后该函数使用循环来显示每个元素。然而，还有另一个问题——确保显示函数不修改原始数组。除非函数的目的就是修改传递给它的数据，否则应避免发生这种情况。使用普通参数时，这种保护将自动实现，这是由于C++按值传递数据，函数使用数据的副本。然而，接受数组名的函数将使用原始数据。为防止函数无意中修改数组的内容，可在声明形参时 使用关键字 `const`：
 
-```Cpp
+```cpp
 void show_array(const double arr[], int n);
 ```
 
@@ -229,7 +229,7 @@ void show_array(const double arr[], int n);
 
 在这个例子中，对数组进行的第三项操作是将每个元素与同一个重新评估因子相乘。需要给函数传递3个参数：因子、数组和元素数目。 该**函数不需要返回值**，因此其代码如下：
 
-```Cpp
+```cpp
 void revalue(double r, double arr[], int n)
 {
     for (int i=0; i < n; ++i)
@@ -249,13 +249,13 @@ void revalue(double r, double arr[], int n)
 
 假设要编写一个处理double数组的函数。如果该函数要修改数组， 其原型可能类似于下面这样：
 
-```Cpp
+```cpp
 void f_modfiy(double arr[], int n);
 ```
 
 如果函数不修改数组，其原型可能类似于下面这样：
 
-```Cpp
+```cpp
 void _f_no_change(const double arr[], int n);
 ```
 
@@ -277,7 +277,7 @@ void _f_no_change(const double arr[], int n);
 !!! note "这里要求 pt 指向的是一个 const int，所以，赋值之后我们是不能用 *pt 来修改 age 的值的，但是pt的声明并不限定着它指向的值就必须得是一个常量，只是对pt来说，这个值是常量。例如，pt指向age，但age不是const。我们是可以直接通过 age 变量来修改 age 的值的，但不能使用 pt 指针来修改它。"
 
 
-```Cpp
+```cpp
 int age = 39;
 const int* pt = &age;
 age = 20;//有效
@@ -285,7 +285,7 @@ age = 20;//有效
 ```
 
 **另一种使用`const`的方式使无法修改指针的值：**
-```Cpp
+```cpp
 int #include <iostream>
 using namespace std;
 int main()
@@ -304,7 +304,7 @@ int main()
 !!! note "这里的`*px`指针与上面的`*pt`指针有所不同，我们可以通过`*px`来修改 score 的值，但是不能让指针`*px`指向另一个变量。"
 
 用一个例子来总结：
-```Cpp
+```cpp
 #include <iostream>
 using namespace std;
 int main()
@@ -330,7 +330,7 @@ int main()
 
 !!! bug "禁止将 const 的地址赋给非 const 指针!"
 
-```Cpp
+```cpp
 #include <iostream>
 using namespace std;
 int main()
@@ -365,7 +365,7 @@ C++禁止第二种情况的原因很简单，如果将 `g_moon` 的地 址赋给
 在C++中，二维数组是一种数据结构，它允许你存储多个数据项，这些数据项本身也是数组。二维数组可以看作是表格或矩阵，其中每个元素可以通过两个索引访问：一个用于行，另一个用于列。
 
 二维数组的几种初始化方式：
-```Cpp
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -403,7 +403,7 @@ int main()
 !!! note "必须写明二维数组的列（第二维），不必写出行（第一维），C++会帮你自动分配。例：int arr4[][3] = { 1,2,3,4,5,6 };"
 
 部分初始化：
-```Cpp
+```cpp
 int arr1[3][4] =
 {
     {1, 2}, // 第一行初始化前两个元素
@@ -414,7 +414,7 @@ int arr1[3][4] =
 int arr2[3][4] = {1, 2, 3, 4}; // 只初始化第一行，其余元素自动初始化为0
 ```
 在C++中，也可以使用指针动态分配二维数组。这通常通过使用`new`关键字来完成。
-```Cpp
+```cpp
 int **array = new int*[3]; // 动态分配行指针
 for (int i = 0; i < 3; ++i) {
     array[i] = new int[4]; // 为每一行分配列
@@ -440,7 +440,7 @@ delete[] array;
 
 **请分别输出三名同学的总成绩**
 
-```Cpp
+```cpp
 #include <iostream>
 using namespace std;
 

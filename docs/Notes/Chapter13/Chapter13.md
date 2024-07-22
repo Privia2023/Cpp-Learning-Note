@@ -49,7 +49,7 @@ class RetedPlayer: public TableTennisPlayer {}
 
 在 第一个RatedPlayer构造函数中，每个成员对应一个形参；而第二个 Ratedplayer构造函数使用一个TableTennisPlayer参数，该参数包括 firstname、lastname和hasTable。
 
-```Cpp
+```cpp
 // simple derived class
 class RatedPlayer : public TableTennisPlayer
 {
@@ -73,7 +73,7 @@ public:
 
 从概念上说，这意味 着基类对象应当在程序进入派生类构造函数之前被创建。C++使用成员 初始化列表语法来完成这种工作。例如，下面是第一个RatedPlayer构造 函数的代码：
 
-```Cpp
+```cpp
 // RatedPlayer methods
 RatedPlayer::RatedPlayer(unsigned int r, const string & fn,
      const string & ln, bool ht) : TableTennisPlayer(fn, ln, ht)
@@ -86,7 +86,7 @@ RatedPlayer::RatedPlayer(unsigned int r, const string & fn,
 
 ![image-20210814225744213](https://static.fungenomics.com/images/2021/08/image-20210814225744213.png)
 
-```Cpp
+```cpp
 RatedPlayer::RatedPlayer(unsigned int r, const string & fn,
      const string & ln, bool ht) {
     rating = r;
@@ -95,7 +95,7 @@ RatedPlayer::RatedPlayer(unsigned int r, const string & fn,
 
 如果省略成员初始化列表，情况将如何呢？首先必须创建基类对象，如果不调用基类构造函数，程序将使用默 认的基类构造函数，因此上述代码与下面等效：
 
-```Cpp
+```cpp
 RatedPlayer::RatedPlayer(unsigned int r, const string & fn,
      const string & ln, bool ht) : TableTennisPlayer() {
     rating = r;
@@ -105,7 +105,7 @@ RatedPlayer::RatedPlayer(unsigned int r, const string & fn,
 
 如果愿意，也可以对派生类成员使用成员初始化列表语法。在这种 情况下，应在列表中使用成员名，而不是类名。所以，第二个构造函数 可以按照下述方式编写：
 
-```Cpp
+```cpp
 RatedPlayer::RatedPlayer(unsigned int r, const string & fn,
      const string & ln, bool ht) : TableTennisPlayer(fn, ln, ht), rating(r) {
     rating = r;
@@ -236,7 +236,7 @@ RatedPlayer::RatedPlayer(unsigned int r, const string & fn,
 
 C++通过使用纯虚函数（pure virtual function） 提供未实现的函数。纯虚函数声明的结尾处为=0。
 
-```Cpp
+```cpp
 virtual double Area() const = 0; // a pure virtual function
 ```
 
@@ -258,7 +258,7 @@ virtual double Area() const = 0; // a pure virtual function
 
 现在，从 `baseDMA` 派生出 `lackDMA` 类，而后者不使用 `new`，也未包含其他一些不常用的、需要特殊处理的设计特性。
 
-```Cpp
+```cpp
 class lacksDMA: public baseDMA {
 private:
     char color[40];

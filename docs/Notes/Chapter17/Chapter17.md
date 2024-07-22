@@ -69,7 +69,7 @@ C++程序通常在用户按下回车 键时刷新输入缓冲区。对于屏幕�
 
 `width()` 方法只影响将显示的下一个项目，然后字段宽度将恢复为默认值：
 
-```Cpp
+```cpp
 cout << "#";
 cout.width(12);
 
@@ -86,7 +86,7 @@ cout << 12 << "#" << 24 << "#\n";
 
 在默认情况下，cout用空格填充字段中未被使用的部分，可以用 fill( )成员函数来改变填充字符。例如，下面的函数调用将填充字符改为星号：
 
-```Cpp
+```cpp
 cout.fill('*');
 ```
 
@@ -149,7 +149,7 @@ getline( )成员函 数和get( )的字符串读取版本都读取字符串，它
 
 `ignore()` 成员函数，该函数接受两个参数：一个是数字，指定要读取的最大字符数；另一个是字符，用作输入分界符。下面的函数调用**读取并丢弃接下来的255个字符或直到到达第一个换行符**：
 
-```Cpp
+```cpp
 cin.ignore(255, '\n');
 ```
 
@@ -162,7 +162,7 @@ cin.ignore(255, '\n');
 
 假设输入队列中的字符数等于或超过了输入方法指定的最大字 符数。首先，来看`getline()` 和下面的代码：
 
-```Cpp
+```cpp
 char temp[30];
 while (cin.getline(temp, 30))
 ```
@@ -209,21 +209,21 @@ getline( )方法将从输入队列中读取字符，将它们放到temp数组的
 
 如果一切顺利，则流状态为零（没有消息就是好消息）。其他状态都是通过将特定位设置为1来记录的。试图打开一个不存在的文件进行 输入时，将设置failbit位，因此可以这样进行检查：
 
-```Cpp
+```cpp
 fin.open(argv[file]);
 if (fin.fail()) {...}  // open attempt failed
 ```
 
 由于ifstream对象和istream对象一样，被放在需要bool类型的地方 时，将被转换为bool值，因此您也可以这样做：
 
-```Cpp
+```cpp
 fin.open(argv[file]);
 if (!fin) {...} 
 ```
 
 较新的C++实现提供了一种更好的检查文件是否被打开的方 法——`is_open()`方法：
 
-```Cpp
+```cpp
 if (!fin.is_open()) {...}  // open attempt failed
 ```
 这种方式之所以更好，是因为它能够检测出其他方式不能检测出的 微妙问题：
@@ -243,13 +243,13 @@ if (!fin.is_open()) {...}  // open attempt failed
 
 C++有一种让在命令行环境中运行的程序能够访问命令行参数的机制，方法是使用下面的 `main()` 函数：
 
-```Cpp
+```cpp
 int main(int argc, char *argv[])
 ```
 
 `argc` 为命令行中的参数个数，其中**包括命令名本身**。`argv` 变量为一个指针，它指向一个指向 `char` 的指针。例如：`argv[0]` 是一个指针，指向存储第一个命令行参数的字符串的第一个字符，依此类推。也就是说， `argv[0]`是命令行中的第一个字符串，依此类推。例子：
 
-```Cpp
+```cpp
 wc report1 report2 report3
 ```
 
@@ -262,7 +262,7 @@ wc report1 report2 report3
 
 ![image-20210816154243582](https://static.fungenomics.com/images/2021/08/image-20210816154243582.png)
 
-```Cpp
+```cpp
 ofstream fout("text", ios_base::out);                // 新写入
 ofstream fout("text", ios_base::out|ios_base::app);  // 追加
 ```
@@ -285,7 +285,7 @@ char * tmpnam(char* pszName);
 ```
 `tmpnam()` 函数创建一个临时文件名，将它放在 `pszName` 指向的C-风格字符串中。常量  `L_tmpnam` 和 `TMP_MAX`（二者都是在cstdio中定义的）限制了文件名包含的字符数以及在确保当前目录中不生成重复文件名的情况下 `tmpnam()` 可被调用的最多次数。下面是生成10个临时 文件名的代码:
 
-```Cpp
+```cpp
 #include <cstdio>
 #include <iostream>
 

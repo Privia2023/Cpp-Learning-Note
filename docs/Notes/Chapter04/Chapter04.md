@@ -35,7 +35,7 @@
 
 表达式arraySize指定元素数目，它必须是整型常数（如10）或const 值，也可以是常量表达式（如8 * sizeof（int）），即其中所有的值在编 译时都是已知的。具体说，arraySize不能是变量，变量的值是在程序 运行时设置的。如：
 
-```Cpp
+```cpp
 int months[12];   // 声明一个包含 12 个整数的数组
 ```
 
@@ -47,7 +47,7 @@ C++ 通过使用下标来访问数组中的每一个元素，C++ 数据从0开�
 
 C++可以在声明语句中初始化数组，只需提供一个用逗号分隔的值列表（初始化列表），并将它们用花 括号括起即可。如 ：
 
-```Cpp
+```cpp
 int yamcosts[3] = {20, 30, 5};
 ```
 如果没有初始化数组的值，则其元素值将是不确定的，这意味着元素的值为以前驻留在该内 存单元中的值。
@@ -147,7 +147,7 @@ cin是如何确定已完成字符串输入呢？由于不能通过键盘输入�
 
 getline( )函数读取整行，它使用通过回车键输入的换行符来确定输入结尾。通过 `cin.getline()` 调用。该函数有两个参数，第一个参数是存储输入行的数组名称，第二个参数是要读取的字符数。如果这个参数为20，则函数最多读取19个字符或者碰到换行符为止，并自动在结尾处添加空字符。如：
 
-```Cpp
+```cpp
 cin.getline(array_name, 20);
 ```
 
@@ -169,14 +169,14 @@ cin.getline(array_name, 20);
 
 由于 `cin.get(name, ArSize)` 返回的还是 cin 对象，因此还可以合并起来调用：
 
-```Cpp
+```cpp
 cin.get(name, ArSize).get();  // 这样也能同时将末尾的换行符读走
 ```
 但风险就是，**假如 ArSize 小于一行的字符数，那么调用 `get()` 后就会发生字符丢失**。
 
 `getline()` 成员函数也同样可以合并调用连续读取字符串：
 
-```Cpp
+```cpp
 cin.getline(name1, ArSize).getline(name2, ArSize);
 ```
 
@@ -202,7 +202,7 @@ cin.getline(name1, ArSize).getline(name2, ArSize);
 
 也可以利用表达式cin>>year返回cin对象，将调用拼接起来：
 
-```Cpp
+```cpp
 (cin >> year).get();  // or (cin >> year).get(ch);
 ```
 
@@ -236,7 +236,7 @@ string 可以如简单变量那般操作。比如，虽然不能将一个数组�
 
 可以使用运算符 + 将两个string 对象合并起来，还可以使用运算符 += 将字符串附加到string对象的末尾。
 
-```Cpp
+```cpp
 string str1 = "aa";
 string str2 = "bb";
 string str3;
@@ -254,7 +254,7 @@ str3 += " cc";       // 一样正确
 
 使用C-风格字符串时，需要使用的函数如下：
 
-```Cpp
+```cpp
 strcpy(charr3, charr1);
 strcat(charr3, charr2);
 ```
@@ -395,7 +395,7 @@ typeName *p_name;
 
 **创建指针时，计算机将分配用来存储指针这个变量本身的内存，但不会分配指针所指向的数据所需的内存**。为数据提供空间是一个独立的步骤，如果忽略这一步麻烦就大了。如：
 
-```Cpp
+```cpp
 long *fellow;       // 创建一个指向 long 类型的指针
 *fellow = 223323;   // 指针还不知道指向哪个地址，就强制赋值，大错特错
 ```
@@ -413,7 +413,7 @@ long *fellow;       // 创建一个指向 long 类型的指针
 
 程序员要告诉new，需要为哪种数据类型分配内存；new将找到一个长 度正确的内存块，并返回该内存块的地址。程序员的责任是将该地址赋 给一个指针。下面是一个这样的示例：
 
-```Cpp
+```cpp
 int *pn = new int;
 ```
 `new int` 告诉程序，需要适合存储 `int` 的内存。`new` 运算符根据类型来确定需要多少字节的内存。然后，它找到这样的内存，并返回其地址。 接下来，将地址赋给 `pn`，`pn` 是被声明为指向 `int` 的指针。现在，`pn` 是地址，而 `*pn` 是存储在那里的值。
@@ -424,7 +424,7 @@ int *pn = new int;
 
 为一个数据对象（可以是结构，也可以是基本类型）获得并指定分 配内存的通用格式如下：
 
-```Cpp
+```cpp
 typeName *pointer_name = new typeName;
 ```
 
@@ -436,7 +436,7 @@ typeName *pointer_name = new typeName;
 
 **`delete` 运算符，用于将不再使用的内存归还给内存池**，归还或释放（free）的内存可供程序的其他部分使用。使用 `delete` 时，后面要加上指向内存块的指针（这些内存块最初是用new分配的）。
 
-```Cpp
+```cpp
 int *ps = new int;   // 声明指针并分配一个可以存 int 类型的内存给指针
 ...
 delete ps;  // 归还内存
@@ -473,14 +473,14 @@ typeName *pointer_name = new typeName [num_elements];
 
 给个例子如：
 
-```Cpp
+```cpp
 int *psome = new int [10];  // 分配可以存储 10 个 int 的内存块
 ```
 
 `new` 返回第一个元素的地址，并将该地址被赋给指针 `psome`。
 
 释放这一块内存时要这样做：
-```Cpp
+```cpp
 delete [] psome;
 ```
 方括号告诉程序，应释放整个数组，而不仅仅是指针指向的元素。 **注意delete和指针之间有方括号**。对于 ANSI/ISO标准来说，`new` 与 `delete` 的格式要匹配，否则导致的后果是不确定。
@@ -497,7 +497,7 @@ delete [] psome;
 
 创建动态数组后，如何使用它呢？**只需要将指针名当做数组名，然后按照数组的访问方式即可**，C/C++ 中数组和指针是基本等价的（但也有实质区别，后续再说）。例子：
 
-```Cpp
+```cpp
 int *psome = new int [10];
 ```
 
@@ -547,7 +547,7 @@ pointername[i] becomes *(pointername + i)
 1．声明指针
 要声明指向特定类型的指针，请使用下面的格式：
 
-```Cpp
+```cpp
 typeName *pointer_name;
 ```
 
@@ -586,7 +586,7 @@ C++允许将指针和整数相加。加1的结果等于原来的地址值加上�
 
 数组和指针的特殊关系可以扩展到C-风格字符串。
 
-```Cpp
+```cpp
 char flower[10] = "rose";
 cout << flower << "s are red.\n";
 ```
@@ -618,7 +618,7 @@ cout << flower << "s are red.\n";
 
 将 new 用于结构体由两步组成：创建结构体和访问其成员。要创建结构体，需要同时使用结构体类型和 new。
 
-```Cpp
+```cpp
 inflatable *ps = new inflatable;
 ```
 这将把足以存储inflatable结构的一块可用内存的地址赋给ps。这种 句法和C++的内置类型完全相同。
@@ -669,12 +669,12 @@ STL 标准库中的模板类 `vector` 和 `array` 是数组的替代品。
 
 `vector` 的声明方式：
 
-```Cpp
+```cpp
 #include<vector>
 vector<typeName> v_name(number);
 ```
 举个例子：
-```Cpp
+```cpp
 #include <iostream>
 #include <vector>
 
@@ -699,13 +699,13 @@ int main()
 
 要创建array对象，需要包含头文件array。array对象的创建语法与 vector稍有不同：
 
-```Cpp
+```cpp
 #include<array>
 
 array<typeName, num_element> arr;
 ```
 举个例子：
-```Cpp
+```cpp
 #include <iostream>
 #include <array>
 
@@ -744,12 +744,12 @@ int main()
 
 在上面代码中注意一个语句：
 
-```Cpp
+```cpp
 a1[-2] = 20.2;
 ```
 
 这是什么意思？这个语句会被转换为：
-```Cpp
+```cpp
 *(a1 - 2) = 20.2;
 ```
 
