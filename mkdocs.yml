@@ -43,7 +43,7 @@ theme:
   features:
     - navigation.instant 
     - navigation.tabs #顶栏
-    - navigation.tabs.sticky
+    #- navigation.tabs.sticky
     - navigation.sections #文章铺开而不是折叠
     - navigation.top
     - toc.follow
