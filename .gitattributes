@@ -1,4 +1,4 @@
-*.md linguist-language=Cpp 
+#*.md linguist-language=Cpp 
 *.yml linguist-language=Cpp 
 *.html linguist-language=Cpp 
 *.js linguist-language=Cpp 
