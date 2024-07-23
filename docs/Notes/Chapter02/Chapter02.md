@@ -79,6 +79,8 @@ int main()
 }
 ```
 
+![main()函数](../../Resources/Pictures/main()function.png)
+
 上面的代码表明有一个名为 `main()`的函数，并且描述了该函数的行为。这几行代码构成了 **函数定义（*function definition*）**。
 
 函数定义由两部分构成：第一行`int main()`叫 **函数头（*function heading*）** 花括号`{ }`中包括的部分叫 **函数体（*function body*）**。
