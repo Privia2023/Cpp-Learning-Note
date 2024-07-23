@@ -82,4 +82,11 @@ theme:
         icon: material/brightness-4
         name: "切换到浅色模式"
 
+copyright: Copyright @ 2023 Privia
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Privia2023
+    - icon: fontawesome/brands/bilibili
+      link: https://space.bilibili.com/82184281
 

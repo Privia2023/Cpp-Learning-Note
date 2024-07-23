@@ -24,3 +24,8 @@ C++最大的亮点就是面向对象程序设计理念的运用。包括面向�
     核心语言，提供了所有构件块，包括变量、数据类型和常量，等等。
     C++ 标准库，提供了大量的函数，用于操作文件、字符串等。
     标准模板库（STL），提供了大量的方法，用于操作数据结构等。
+
+!!! info inline end
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+    massa, nec semper lorem quam in massa.
