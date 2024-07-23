@@ -84,6 +84,43 @@ int main()
 
 上面的代码表明有一个名为 `main()`的函数，并且描述了该函数的行为。这几行代码构成了 **函数定义（*function definition*）**。
 
-函数定义由两部分构成：第一行`int main()`叫 **函数头（*function heading*）** 花括号`{ }`中包括的部分叫 **函数体（*function body*）**。
+函数定义由两部分构成：第一行`int main()`叫 **函数头（*function heading*）** 花括号`{}`中包括的部分叫 **函数体（*function body*）**。**函数头** 是指函数定义的开始部分，它包含了函数的返回类型、函数名以及函数的参数列表。**函数体** 是指出函数应做什么的计算机指令。
+
+在 C++ 中，每条完整的指令都称为 **语句** 。所以的语句都以 **分号** 结束。
+!!! note "语句和分号"
+    我们先来看两段代码。
+
+    ```cpp
+    #include <iostream>
+    int main()
+    {
+        std
+            ::cout <<
+            "Hello World!"
+            << std::
+                endl
+                    ;
+        return
+            0;
+    }
+    ```
+    
+    ```cpp
+    #include <iostream>
+    int main()
+    {
+        std::cout << "Hello World!" << std::endl;
+        return 0;
+    }
+    ```
+    
+    事实上，这两段代码都能成功编译并在控制台上打印`Hello World!`。由此看来 C++ 判断语句结束不会关心代码缩进和行数，C++ 只关心有没有想要的`;`。
+
+    结论是：**在 C++ 中，不能省略分号** 。
+    
+    ![Semicolon is missing](../../Resources/Pictures/Semicolonismissing.png)
+
+`main()`中最后一条语句叫做 **返回语句（*return statement*）** ,它结束该函数。
+ 
 
 
