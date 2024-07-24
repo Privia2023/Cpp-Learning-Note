@@ -120,7 +120,7 @@ int main()
     
     ![Semicolon is missing](../../Resources/Pictures/Semicolonismissing.png)
 
-`main()`中最后一条语句叫做 **返回语句（*return statement*）** ,它结束该函数。
+`main()`中最后一条语句叫做 **返回语句（*return statement*）** ，它结束该函数。
  
 
 
