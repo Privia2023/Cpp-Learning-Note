@@ -99,9 +99,9 @@ int main()
             "Hello World!"
             << std::
                 endl
-                    ; //第一句
+                    ; //第一句结束
         return
-            0; //第二句
+            0; //第二句结束
     }
     ```
     
@@ -109,8 +109,8 @@ int main()
     #include <iostream>
     int main()
     {
-        std::cout << "Hello World!" << std::endl; //第一句
-        return 0; //第二句
+        std::cout << "Hello World!" << std::endl; //第一句结束
+        return 0; //第二句结束
     }
     ```
     
