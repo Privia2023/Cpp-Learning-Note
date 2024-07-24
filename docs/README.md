@@ -6,24 +6,6 @@
 
 **本项目是以《C++ Primer Plus（第6版）中文版》为依托的学习仓库，包括笔记和所给出的课后练习答案。这是最有名的 C++ 入门书之一，内容系统、易读，并且不需要读者有任何编程基础。笔记以此书为依托，但其内容并不完全与书本内容相同。如果觉得项目对你有帮助，欢迎Star和Fork！当然，如果项目有什么需要改进的地方，也欢迎随时提Issue或PR！**
 
-
-## 资源下载
-
-《C++ Primer Plus（第6版）中文版》 PDF文件下载链接：
-
-Onedrive网盘：
-```
-https://1drv.ms/b/s!AsgzATN6SnKsgj8bQwBmgZzKpjMy?e=XXY3tI
-```
-123网盘：
-```
-https://www.123pan.com/s/pGBTTd-GJ313.html
-```
-全书一共 18 章，外加 10 章附录。
-
-
-<p align="center"><a> ---- START ---- </a></p>
-
 ## 书本目录
 
 **第 I 部分 : C++ 基础**
@@ -53,7 +35,21 @@ https://www.123pan.com/s/pGBTTd-GJ313.html
 - [第 17 章 : 输入、输出和文件](Exercises/Chapter17/README.md) | ([笔记](Notes/Chapter17/Chapter17.md))
 - [第 18 章 : 探讨 C++ 新特性](Exercises/Chapter18/README.md) | ([笔记](Notes/Chapter18/Chapter18.md))
 
-<p align="center"><a> ---- END ---- </a></p>
+
+## 资源下载
+
+《C++ Primer Plus（第6版）中文版》 PDF文件下载链接：
+
+Onedrive网盘：
+```
+https://1drv.ms/b/s!AsgzATN6SnKsgj8bQwBmgZzKpjMy?e=XXY3tI
+```
+123网盘：
+```
+https://www.123pan.com/s/pGBTTd-GJ313.html
+```
+全书一共 18 章，外加 10 章附录。
+
 
 
 
