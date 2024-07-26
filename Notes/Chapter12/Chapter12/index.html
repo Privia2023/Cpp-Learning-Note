@@ -1,0 +1,5445 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Privia2023(SudakaLemonTea@outlook.com)">
+      
+      
+        <link rel="canonical" href="https://privia2023.github.io/Cpp-Learning-Note/Notes/Chapter12/Chapter12/">
+      
+      
+        <link rel="prev" href="../../Chapter11/Chapter11/">
+      
+      
+        <link rel="next" href="../../Chapter13/Chapter13/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.30">
+    
+    
+      
+        <title>第十二章 类和动态内存分配 - C++ Learning Note</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="C++ Learning Note" class="md-header__button md-logo" aria-label="C++ Learning Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            C++ Learning Note
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第十二章 类和动态内存分配
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Privia2023/Cpp-Learning-Note" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Privia2023/Cpp-Learning-Note
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  C++ Learning Note
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Answers/Attention/" class="md-tabs__link">
+          
+  
+  Answers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Codes/Chapter02/%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0C%2B%2B/" class="md-tabs__link">
+          
+  
+  Codes
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Exercises/Attention/" class="md-tabs__link">
+          
+  
+  Exercises
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../Chapter01/Chapter01/" class="md-tabs__link">
+          
+  
+  Notes
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="C++ Learning Note" class="md-nav__button md-logo" aria-label="C++ Learning Note" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    C++ Learning Note
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Privia2023/Cpp-Learning-Note" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Privia2023/Cpp-Learning-Note
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++ Learning Note
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Answers
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Answers
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Attention/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    本文档记录 C++ 编程过程中需要特别注意的事项
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter02
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter02
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter02/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第 2 章 《开始学习C++》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter03/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第 3 章 《处理数据》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter04
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter04
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter04/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第四章 《复合类型》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter05
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter05
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter05/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第五章 《循环和关系表达式》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter06
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter06
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter06/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第六章 《分支语句和逻辑运算符》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter07
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter07
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter07/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第七章 《函数——C++的编程模块》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_8" id="__nav_2_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter08
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter08
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter08/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第八章 《函数深探》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_9" id="__nav_2_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter09
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter09
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter09/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第九章 《内存模型和名字空间》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_10" id="__nav_2_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter10
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter10
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十章 《对象和类》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_11" id="__nav_2_11_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter11
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_11">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter11
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第11章 《使用类》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_12" id="__nav_2_12_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter12
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_12">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter12
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter12/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第九章 《类和动态内存分配》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_13" id="__nav_2_13_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter13
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_13">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter13
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter13/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第13章 《类继承 》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14" id="__nav_2_14_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter14
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter14
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter14/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第14章 《C++中的代码重用 》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_15" id="__nav_2_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter15
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_15">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter15
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter15/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第15章 《友元、异常和其他》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_16" id="__nav_2_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter16
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_16">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter16
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter16/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第16章 《string类和标准模板库》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_17" id="__nav_2_17_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter17
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_17">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter17
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter17/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第17章 《输入、输出和文件》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_18" id="__nav_2_18_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter18
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_18">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter18
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Answers/Chapter18/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第18章 《探讨C++新标准》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Codes
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Codes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter02
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter02
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Codes/Chapter02/%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0C%2B%2B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第二章 开始学习C++
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Exercises
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Exercises
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Attention/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    本文档记录 C++ 编程过程中需要特别注意的事项
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter02
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter02
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter02/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第 2 章 《开始学习C++》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter03/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第 3 章 《处理数据》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter04
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter04
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter04/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第四章 《复合类型》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter05
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter05
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter05/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第五章 《循环和关系表达式》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter06
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter06
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter06/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第六章 《分支语句和逻辑运算符》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter07
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter07
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter07/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第七章 《函数——C++的编程模块》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter08
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter08
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter08/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第八章 《函数深探》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_9" id="__nav_4_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter09
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_9">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter09
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter09/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第九章 《内存模型和名字空间》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_10" id="__nav_4_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter10
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_10">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter10
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十章 《对象和类》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_11" id="__nav_4_11_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter11
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_11">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter11
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第11章 《使用类》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_12" id="__nav_4_12_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter12
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_12">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter12
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter12/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第九章 《类和动态内存分配》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_13" id="__nav_4_13_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter13
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_13">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter13
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter13/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第13章 《类继承 》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_14" id="__nav_4_14_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter14
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_14">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter14
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter14/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第14章 《C++中的代码重用 》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_15" id="__nav_4_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter15
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_15">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter15
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter15/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第15章 《友元、异常和其他》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_16" id="__nav_4_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter16
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_16">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter16
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter16/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第16章 《string类和标准模板库》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_17" id="__nav_4_17_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter17
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_17">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter17
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter17/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第17章 《输入、输出和文件》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_18" id="__nav_4_18_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapter18
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_18">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter18
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Exercises/Chapter18/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第18章 《探讨C++新标准》 编程练习题之我解
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter01
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter01
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter01/Chapter01/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第一章 预备知识
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter02
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter02
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter02/Chapter02/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第二章 开始学习 C++
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter03/Chapter03/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第三章 处理数据
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter04
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter04
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter04/Chapter04/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第四章 复合类型
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter05
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter05
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter05/Chapter05/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第五章 循环和关系表达式
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter06
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter06
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter06/Chapter06/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第六章 分支语句和逻辑运算符
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter07
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter07
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter07/Chapter07/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第七章 函数——C++的编程模块
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter08
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter08
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter08/Chapter08/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第八章 函数探幽
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_9" id="__nav_5_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter09
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter09
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter09/Chapter09/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第九章 内存模型和名称空间
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_10" id="__nav_5_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter10
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_10">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter10
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter10/Chapter10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十章 对象和类
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_11" id="__nav_5_11_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter11
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_11">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter11
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter11/Chapter11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十一章 使用类
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_12" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_12" id="__nav_5_12_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter12
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_12">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter12
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    第十二章 类和动态内存分配
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    第十二章 类和动态内存分配
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1 动态内存和类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.1 动态内存和类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1211" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1.1 复习示例和静态类成员
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1212" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1.2 特殊成员函数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1213-stringbad" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1.3 回到 Stringbad：复制构造函数的哪里出了问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1214-stringbad" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1.4 Stringbad的其他问题：赋值运算符
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#122-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2 改进后的新String类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.2 改进后的新String类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1223" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2.3 使用中括号表示法访问字符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1224" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2.4 静态类成员函数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1225" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2.5 进一步重载赋值运算符
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#123-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.3 在构造函数中使用new时应注意的事项
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.3 在构造函数中使用new时应注意的事项">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1231" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.3.1 应该和不应该
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1232" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.3.2 包含类成员的类的逐成员复制
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#124" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4 有关返回对象的说明
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.4 有关返回对象的说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1241-const" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4.1 返回指向const对象的引用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1242-const" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4.2 返回指向非const对象的引用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1243" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4.3 返回对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1244-const" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4.4 返回 const 对象
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#125" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.5 使用指向对象的指针
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.5 使用指向对象的指针">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1251-newdelete" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.5.1 再谈new和delete
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1252" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.5.2 指针和对象小结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1253-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.5.3 再谈定位new运算符
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#126" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.6 复习各种技术
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.6 复习各种技术">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1261" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.6.1 重载&lt;&lt;运算符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1262" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.6.2 转换函数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1263-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.6.3 其构造函数使用new的类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#127" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.7 队列模拟
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#128" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.8 总结
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_13" id="__nav_5_13_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter13
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_13">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter13
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter13/Chapter13/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十三章 类继承
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_14" id="__nav_5_14_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter14
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_14">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter14
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter14/Chapter14/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十四章 C++中的代码重用
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_15" id="__nav_5_15_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter15
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_15">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter15
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter15/Chapter15/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十五章 友元、异常和其他
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_16" id="__nav_5_16_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter16
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_16">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter16
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter16/Chapter16/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十六章 string类和标准模板库
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_17" id="__nav_5_17_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter17
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_17">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter17
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter17/Chapter17/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十七章 输入、输出和文件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_18" id="__nav_5_18_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapter18
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_18">
+            <span class="md-nav__icon md-icon"></span>
+            Chapter18
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Chapter18/Chapter18/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第十八章 探讨C++新标准
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1 动态内存和类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.1 动态内存和类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1211" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1.1 复习示例和静态类成员
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1212" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1.2 特殊成员函数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1213-stringbad" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1.3 回到 Stringbad：复制构造函数的哪里出了问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1214-stringbad" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1.4 Stringbad的其他问题：赋值运算符
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#122-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2 改进后的新String类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.2 改进后的新String类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1223" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2.3 使用中括号表示法访问字符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1224" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2.4 静态类成员函数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1225" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2.5 进一步重载赋值运算符
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#123-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.3 在构造函数中使用new时应注意的事项
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.3 在构造函数中使用new时应注意的事项">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1231" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.3.1 应该和不应该
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1232" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.3.2 包含类成员的类的逐成员复制
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#124" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4 有关返回对象的说明
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.4 有关返回对象的说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1241-const" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4.1 返回指向const对象的引用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1242-const" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4.2 返回指向非const对象的引用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1243" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4.3 返回对象
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1244-const" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.4.4 返回 const 对象
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#125" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.5 使用指向对象的指针
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.5 使用指向对象的指针">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1251-newdelete" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.5.1 再谈new和delete
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1252" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.5.2 指针和对象小结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1253-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.5.3 再谈定位new运算符
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#126" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.6 复习各种技术
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.6 复习各种技术">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1261" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.6.1 重载&lt;&lt;运算符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1262" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.6.2 转换函数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1263-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.6.3 其构造函数使用new的类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#127" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.7 队列模拟
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#128" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.8 总结
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">第十二章 类和动态内存分配<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>本章内容包括：</p>
+<ul>
+<li>对类成员使用动态内存分配；</li>
+<li>隐式和显示复制构造函数；</li>
+<li>隐式和显示重载赋值运算符；</li>
+<li>在构造函数中使用 <code>new</code> 所必须完成的工作；</li>
+<li>使用静态类成员；</li>
+<li>将定位 <code>new</code> 运算符用于对象；</li>
+<li>使用指向对象的指针；</li>
+<li>实现队列抽象数据类型（ADT）。</li>
+</ul>
+<p>对类使用 <code>new</code> 和 <code>delete</code> 将影响构造函数和析构函数的设计以及运算符的重载。</p>
+<h2 id="121">12.1 动态内存和类<a class="headerlink" href="#121" title="Permanent link">&para;</a></h2>
+<h3 id="1211">12.1.1 复习示例和静态类成员<a class="headerlink" href="#1211" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// strngbad.h -- flawed string class definition</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#ifndef STRNGBAD_H_</span>
+<span class="cp">#define STRNGBAD_H_</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StringBad</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">str</span><span class="p">;</span><span class="w">                </span><span class="c1">// pointer to string</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w">                   </span><span class="c1">// length of string</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">num_strings</span><span class="p">;</span><span class="w">    </span><span class="c1">// number of objects</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">StringBad</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">);</span><span class="w"> </span><span class="c1">// constructor</span>
+<span class="w">    </span><span class="n">StringBad</span><span class="p">();</span><span class="w">               </span><span class="c1">// default constructor</span>
+<span class="w">    </span><span class="o">~</span><span class="n">StringBad</span><span class="p">();</span><span class="w">              </span><span class="c1">// destructor</span>
+<span class="c1">// friend function</span>
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">os</span><span class="p">,</span>
+<span class="w">                       </span><span class="k">const</span><span class="w"> </span><span class="n">StringBad</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">st</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="cp">#endif</span>
+</code></pre></div>
+<p>对这个声明，需要注意的有两点。首先，它使用char指针（而不是 char数组）来表示姓名。这意味着类声明没有为字符串本身分配存储空 间，而是在构造函数中使用new来为字符串分配空间。这避免了在类声 明中预先定义字符串的长度。</p>
+<p>其次，将num_strings成员声明为静态存储类。静态类成员有一个特点：无论创建了多少对象，程序都只创建一个静态类变量副本。也就是说，<code>StringBad</code> 类的所有对象共享同一个 <code>num_strings</code>。假设创建了10个 <code>StringBad</code> 对象，将有10个 <code>str</code> 成员和10个 <code>len</code> 成员，但只有一个共享的 <code>num_strings</code> 成员（参见图12.1）。</p>
+<p><img alt="image-20210812100941808" src="https://static.fungenomics.com/images/2021/08/image-20210812100941808.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// strngbad.cpp -- StringBad class methods</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstring&gt;</span><span class="c1">                    // string.h for some</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;strngbad.h&quot;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">;</span>
+
+<span class="c1">// initializing static class member</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">StringBad</span><span class="o">::</span><span class="n">num_strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">// class methods</span>
+
+<span class="c1">// construct StringBad from C string</span>
+<span class="n">StringBad</span><span class="o">::</span><span class="n">StringBad</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="w">             </span><span class="c1">// set size</span>
+<span class="w">    </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="p">[</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w">          </span><span class="c1">// allot storage</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">strcpy</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">);</span><span class="w">              </span><span class="c1">// initialize pointer</span>
+<span class="w">    </span><span class="n">num_strings</span><span class="o">++</span><span class="p">;</span><span class="w">                    </span><span class="c1">// set object count</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">num_strings</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;: </span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">str</span>
+<span class="w">         </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> object created</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w">    </span><span class="c1">// For Your Information</span>
+<span class="p">}</span>
+
+<span class="n">StringBad</span><span class="o">::</span><span class="n">StringBad</span><span class="p">()</span><span class="w">                </span><span class="c1">// default constructor</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">strcpy</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;C++&quot;</span><span class="p">);</span><span class="w">          </span><span class="c1">// default string</span>
+<span class="w">    </span><span class="n">num_strings</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">num_strings</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;: </span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">str</span>
+<span class="w">         </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> default object created</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">// FYI</span>
+<span class="p">}</span>
+
+<span class="n">StringBad</span><span class="o">::~</span><span class="n">StringBad</span><span class="p">()</span><span class="w">               </span><span class="c1">// necessary destructor</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> object deleted, &quot;</span><span class="p">;</span><span class="w">    </span><span class="c1">// FYI</span>
+<span class="w">    </span><span class="o">--</span><span class="n">num_strings</span><span class="p">;</span><span class="w">                    </span><span class="c1">// required</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">num_strings</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; left</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// FYI</span>
+<span class="w">    </span><span class="k">delete</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="n">str</span><span class="p">;</span><span class="w">                    </span><span class="c1">// required</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">os</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">StringBad</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">st</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">os</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">str</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">os</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>int StringBad::num_strings = 0;</code> 这条语句将静态成员 <code>num_strings</code> 的值初始化为零。注意：<strong>不能在类声明中初始化静态成员变量，这是因为类声明中只描述如何分配内存，但并不分配内存</strong>。</p>
+<p>可以在类声明之外使用单独的语句来进行初始化，这是因为静态类成员是单独存储的，而不是对象的组成部分。</p>
+<p>另外，初始化是在方法文件中，而不是在类声明文件中进行的，这是因为类声明位于头文件中，程序可能将头文件包括在其他几个文件中。如果 在头文件中进行初始化，将出现多个初始化语句副本，从而引发错误。</p>
+<p>上述代码中，<code>strlen()</code>返回字符串长度，但不包括末尾的空字符，因此构造函数将<code>len</code>加1，使分配的内存能够存储包含空字符的字符串。</p>
+<p>删除对象可以释放对象本身占用的内存，但并不能自动释放属于对象成员的指针指向的内存。因此，必须使用析构函数。在析构函数中使用delete语句可确保对象过期 时，由构造函数使用new分配的内存被释放。</p>
+<blockquote>
+<p>在构造函数中使用 <code>new</code> 来分配内存时，必须在相应的析构函数中使用 <code>delete</code> 来释放内存。如果 使用 <code>new[]</code>（包括中括号）来分配内存，则应使用<code>delete[]</code>（包括中括号）来释放内存。</p>
+</blockquote>
+<p><code>StringBad</code>的第一个版本有许多故意留下的缺陷，是一个很糟糕的类（找到该类的错误之处，甚至可以作为一道困难的编程题），这些缺陷使得输出是不确定的。例如，有些 编译器无法编译它。虽然输出的具体内容有所差别，但基本问题和解决方法（稍后将介绍） 是相同的。</p>
+<p>程序输出结果：</p>
+<p><img alt="image-20210812111740343" src="https://static.fungenomics.com/images/2021/08/image-20210812111740343.png" /></p>
+<p><code>callme2()</code> 按值（而不是按引用）传递 <code>headline2</code>，结果表明这是一个严重的问题。</p>
+<p>首先，将 <code>headline2</code> 作为函数参数来传递从而**导致析构函数被调用**。这是因为函数的参数  <code>sb</code> 是一个临时变量，当函数调用结束后会释放这个临时变量，从而导致析构函数被调用，糟糕的源头在于析构函数中恰巧就释放了字符串。 其次，虽然按值传递可以防止原始参数被修改，但实际上函数已使原始 字符串无法识别，导致显示一些非标准字符（显示的文本取决于内存中 包含的内容）。</p>
+<p>因为自动存储对象被删除的顺序与创建顺序相反，所以最先删除的 3个对象是<code>knots</code>、<code>sailor</code>和<code>sport</code>。删除<code>knots</code>和<code>sailor</code>时是正常的，但在删 除<code>sport</code>时，<code>Dollars</code>变成了<code>Doll8</code>(或其他)。对于<code>sport</code>，程序只使用它来初始化 <code>sailor</code>，但这种操作修改了 <code>sports</code>（这又可以做一道题）。</p>
+<p>具体而言，程序中 <code>Stringbad sailor = sports;</code> 这个语句既不是调用默认构造函数也不是调用参数为 <code>const char*</code> 的构造函数，而是等价于 <code>StringBad sailor=StringBad(sports);</code> ，又因为<code>sports</code>的类型为<code>StringBad</code>，因此与之相应的构造函数原型应该是 <code>StringBad(const String &amp;);</code>，<strong>但这个构造函数在<code>StringBad</code>类中没有显式声明更没有定义。这时当我们使用一个对象来初始化另一个对象时，编译器将自动生成上述构造函数（称为复制构造函数，因为它创建对象的一个副本）</strong>。但自动生成的复制构造函数不知道需要更新静态变量<code>num_string</code>，因此会将计数方案搞乱（这就是复制对象带来的问题）。实际上，这个例子说明的所有问题都是由编译器自动生成的成员函数引起的。</p>
+<p>最后被删除的两个对象（<code>headline2</code>和 <code>headline1</code>）已经无法识别。</p>
+<h3 id="1212">12.1.2 特殊成员函数<a class="headerlink" href="#1212" title="Permanent link">&para;</a></h3>
+<p><code>StringBad</code>类的问题是由特殊成员函数引起的。这些成员函数是自动定义的，就<code>StringBad</code>而言，这些函数的行为与类设计不符。具体地说， C++自动提供了下面这些成员函数：</p>
+<ul>
+<li>默认构造函数；</li>
+<li>默认析构函数；</li>
+<li>复制构造函数；</li>
+<li>复制预运算符；</li>
+<li>地址运算符。</li>
+</ul>
+<p>更准确地说，编译器将生成上述最后三个函数的定义——如果程序 使用对象的方式要求这样做。例如，如果您将一个对象赋给另一个对 象，编译器将提供赋值运算符的定义。</p>
+<p>结果表明，StringBad类中的问题是由隐式复制构造函数和隐式赋值运算符引起的。</p>
+<p>1．默认构造函数</p>
+<p>默认情况下，编译器将提供一个不接受任何参数，也不执行任何操作 的构造函数（默认的默认构造函数），这是因为创建对象时总是会调用 构造函数。</p>
+<p>如果定义了构造函数，C++将不会定义默认构造函数。</p>
+<p>2．复制构造函数</p>
+<p>复制构造函数用于将一个对象复制到新创建的对象中。也就是说，<strong>它用于初始化过程中（包括按值传递参数），而不是常规的赋值过程</strong>（那赋值的时候怎么办？赋值靠赋值运算符=，见12.1.4），原型是：<code>Class_name(const Class_name &amp;)</code>。它接受一个指向类对象的常量引用作为参数。</p>
+<p>对于复制构造函数，需要知道两点：何时调用和有何功能。</p>
+<p>3．何时调用复制构造函数</p>
+<p>新建一个对象并将其初始化为同类现有对象时，复制构造函数都将被调用。 最常见的情况是将新对象显式地初始化为现有的对象。</p>
+<p><img alt="image-20210812120029250" src="https://static.fungenomics.com/images/2021/08/image-20210812120029250.png" /></p>
+<p>其中中间的2种声明可能会使用复制构造函数直接创建metoo和 also，也可能使用复制构造函数生成一个临时对象，然后将临时对象的 内容赋给metoo和also，这取决于具体的实现。最后一种声明使用motto 初始化一个匿名对象，并将新对象的地址赋给pStringBad指针。</p>
+<p><strong>每当程序生成了对象副本时，编译器都将使用复制构造函数</strong>。具体地说，当函数按值传递对象（如程序清单12.3中的 <code>callme2()</code>）或函数返回对象时，都将使用复制构造函数。记住，<strong>按值传递意味着创建原始变量的一个副本</strong>。编译器生成临时对象时，也将使用复制构造函数。</p>
+<p>何时生成临时对象随编译器而异，但无论是哪种编译器，<strong>当按值传递和返回对象时，都将调用复制构造函数</strong>。</p>
+<blockquote>
+<p>由于按值传递对象将调用复制构造函数，因此应该按引用传递对象。这样可以节省调用构造函数的时间以及存储新对象的空间。</p>
+</blockquote>
+<p>4．默认的复制构造函数的功能</p>
+<p>默认的复制构造函数逐个复制非静态成员（成员复制也称为浅复制），复制的是成员的值。</p>
+<p><img alt="image-20210812120710195" src="https://static.fungenomics.com/images/2021/08/image-20210812120710195.png" /></p>
+<p><img alt="image-20210812120946029" src="https://static.fungenomics.com/images/2021/08/image-20210812120946029.png" /></p>
+<h3 id="1213-stringbad">12.1.3  回到 Stringbad：复制构造函数的哪里出了问题<a class="headerlink" href="#1213-stringbad" title="Permanent link">&para;</a></h3>
+<p>第一个异常，num_string是负值。当<code>callme2()</code>被调用时，复制构造函数被用来初始化 <code>callme2()</code> 的形参，还被用来将对象 <code>sailor</code> 初始化为对象 <code>sports</code>。默认的复 制构造函数不说明其行为，因此它不指出创建过程，也不增加计数器 num_strings的值。但析构函数更新了计数，并且在任何对象过期时都将 被调用，而不管对象是如何被创建的。程序的输出表明，析构函数的调用次数比构造函数的调用次数多2。</p>
+<p>第二个异常之处更微妙，也更危险，其症状之一是字符串内容出现乱码。原因在于隐式复制构造函数是按值进行复制的。例如，对于程序清 单12.3，隐式复制构造函数的功能相当于：<code>sailor.str = sport.str;</code>。这里复制的并不是字符串，而是一个指向字符串的指针。也就是 说，将sailor初始化为sports后，得到的是两个指向同一个字符串的指 针。当operator &lt;&lt;()函数使用指针来显示字符串时，这并不会出现问 题。但当析构函数被调用时，这将引发问题。析构函数StringBad释放str 指针指向的内存，因此释放sailor的效果如下：</p>
+<p><img alt="image-20210812121546201" src="https://static.fungenomics.com/images/2021/08/image-20210812121546201.png" /></p>
+<p><code>sports.str</code>指向的内存已经被 <code>sailor</code> 的析构函数释放，这将导致不确定 的、可能有害的后果。</p>
+<p>1．定义一个显式复制构造函数以解决问题</p>
+<p>解决类设计中这种问题的方法是进行深度复制（deep copy）。也就是说，<strong>复制构造函数应当复制字符串并将副本的地址赋给<code>str</code>成员，而不仅仅是复制字符串地址</strong>。这样每个对象都有自己的字符串，而不是引用 另一个对象的字符串。调用析构函数时都将释放不同的字符串，而不会试图去释放已经被释放的字符串。可以这样编写<code>String</code>的复制构造函数：</p>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="o">::</span><span class="n">String</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w">     </span><span class="c1">// construct String from C string</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="w">          </span><span class="c1">// set size</span>
+<span class="w">    </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="p">[</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span><span class="w">       </span><span class="c1">// allot storage</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">strcpy</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">);</span><span class="w">           </span><span class="c1">// initialize pointer</span>
+<span class="w">    </span><span class="n">num_strings</span><span class="o">++</span><span class="p">;</span><span class="w">                 </span><span class="c1">// set object count</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><img alt="image-20210812121927440" src="https://static.fungenomics.com/images/2021/08/image-20210812121927440.png" /></p>
+<h3 id="1214-stringbad">12.1.4 Stringbad的其他问题：赋值运算符<a class="headerlink" href="#1214-stringbad" title="Permanent link">&para;</a></h3>
+<p>并不是程序清单12.3的所有问题都可以归咎于默认的复制构造函 数，还需要看一看默认的赋值运算符。C++允许类对象赋值，这是通过自动为类重载赋值运算符实现的。这种运算符 的原型如下：</p>
+<div class="highlight"><pre><span></span><code>Class_name &amp; Class_name::operator=(const Class_name &amp;);
+</code></pre></div>
+<p>它接受并返回一个指向类对象的引用。</p>
+<p>1．赋值运算符的功能以及何时使用它</p>
+<p>将已有的对象赋给另一个对象时，将使用重载的赋值运算符。初始化对象时，并不一定会使用赋值运算符，而更可能是调用复制构造函数。</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">StringBad</span><span class="w"> </span><span class="n">metoo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">knot</span><span class="p">;</span><span class="w"> </span>
+</code></pre></div>
+这里，<code>metoo</code> 是一个新创建的对象，被初始化为 <code>knot</code> 的值，因此使用复制构造函数。然而，正如前面指出的，实现时**也可能分两步来处理这条语句：使用复制构造函数创建一个临时对象，然后通过赋值将临时 对象的值复制到新对象中**。这就是说，初始化总是会调用复制构造函数，而使用 <code>=</code> 运算符时也可能调用赋值运算符。</p>
+<p>与复制构造函数相似，赋值运算符的隐式实现也对成员进行逐个复制，静态成员不受影响。</p>
+<p>2．赋值的问题出在哪里</p>
+<p>程序清单12.3将headline1赋给knot：<code>knot=headline1;</code>。为knot调用析构函数时，正常。为Headline1调用析构函数时，异常。<strong>出现的问题与隐式复制构造函数相同：数据受损。这也是成员复制 的问题，即导致headline1.str和knot.str指向相同的地址</strong>。</p>
+<ol>
+<li>解决赋值的问题</li>
+</ol>
+<p>解决办法是提供赋 值运算符（进行深度复制）定义，这与复制构造函数相似，但也有 一些差别:</p>
+<ul>
+<li>由于目标对象可能引用了以前分配的数据，所以函数应使用<code>delete []</code> 来释放这些数据；</li>
+<li><strong>函数应当避免将对象赋给自身；否则，给对象重新赋值前，释放内 存操作可能删除对象的内容</strong>；</li>
+<li>函数返回一个指向调用对象的**引用**（注意是引用，不是值也不是指针）。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">// assign a String to a String</span>
+<span class="n">String</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">String</span><span class="o">::</span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">st</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">&amp;</span><span class="n">st</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">delete</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="n">str</span><span class="p">;</span>
+<span class="w">    </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">len</span><span class="p">;</span>
+<span class="w">    </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="p">[</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">strcpy</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">str</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>赋值操作并不创建新的对象，因此不需要调整静态数据成员 <code>num_strings</code> 的值。</p>
+<h2 id="122-string">12.2 改进后的新String类<a class="headerlink" href="#122-string" title="Permanent link">&para;</a></h2>
+<p>首先，添加前面介绍过的复制构造函数和赋值运算符，使类 能够正确管理类对象使用的内存。其次，由于您已经知道对象何时被创 建和释放，因此可以让类构造函数和析构函数保持沉默，不再在每次被 调用时都显示消息。另外，也不用再监视构造函数的工作情况，因此可以简化默认构造函数，使之创建一个空字符串，而不是“C++”。</p>
+<p>新默认构造函数中：</p>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="o">::</span><span class="n">String</span><span class="p">()</span><span class="w">                   </span><span class="c1">// default constructor</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">;</span><span class="w">                 </span><span class="c1">// default string</span>
+<span class="w">    </span><span class="n">num_strings</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>为什么代码为 <code>str=new char[1];</code> 而不是 <code>str = new char;</code>，这两个方式相同，但区别在于前者和类析构函数兼容，而后者不兼容。这是析构函数：</p>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="o">::~</span><span class="n">String</span><span class="p">()</span><span class="w">                     </span><span class="c1">// necessary destructor</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="o">--</span><span class="n">num_strings</span><span class="p">;</span><span class="w">                    </span><span class="c1">// required</span>
+<span class="w">    </span><span class="k">delete</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="n">str</span><span class="p">;</span><span class="w">                    </span><span class="c1">// required</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>对 <code>operator&gt;</code> 的重载很妙啊，直接利用了 <code>operator&lt;</code> 的重载结果：
+<img alt="image-20210812163721949" src="https://static.fungenomics.com/images/2021/08/image-20210812163721949.png" /></p>
+<h3 id="1223">12.2.3 使用中括号表示法访问字符<a class="headerlink" href="#1223" title="Permanent link">&para;</a></h3>
+<p>在C++中，两个中括号组成一个运算符——中括号运算符，可以使 用方法operator 来重载该运算符。通常，二元C++运算符（带两个操作 数）位于两个操作数之间，例如2 +5。但对于中括号运算符，<strong>一个操作数位于第一个中括号的前面，另一个操作数位于两个中括号之间</strong>。例如：<code>city[0]</code> 中，<code>city</code>是第一个操作数，<code>[]</code>是运算符，<code>0</code>是第二个操作数。</p>
+<p>在重载时，C++将区分常量和非常量函数的特征标。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// read-write char access for non-const String</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">String</span><span class="o">::</span><span class="k">operator</span><span class="p">[](</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="c1">// read-only char access for const String</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">String</span><span class="o">::</span><span class="k">operator</span><span class="p">[](</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>有了上述定义后，就可以读/写常规String对象了；而对于const String对象，则只能读取其数据。</p>
+<blockquote>
+<p>重载要注意同时考虑对const 和非 const 变量进行。</p>
+</blockquote>
+<p><img alt="image-20210812165647776" src="https://static.fungenomics.com/images/2021/08/image-20210812165647776.png" /></p>
+<p>也可以修改内容：</p>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">means</span><span class="p">(</span><span class="s">&quot;might&quot;</span><span class="p">);</span>
+<span class="n">means</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;r&#39;</span><span class="p">;</span><span class="w">   </span><span class="c1">// 这一句相当于 means.str[0] = &#39;r&#39;, 但 str 是私有成员，实际是没法在成员函数之外这样使用的。</span>
+</code></pre></div>
+<h3 id="1224">12.2.4 静态类成员函数<a class="headerlink" href="#1224" title="Permanent link">&para;</a></h3>
+<p>首先，不能通过对象调用静态成员函数；实际上，静态成员函数甚 至不能使用this指针。</p>
+<p>其次，由于静态成员函数不与特定的对象相关联，因此只能使用静 态数据成员。</p>
+<p><img alt="image-20210812170316128" src="https://static.fungenomics.com/images/2021/08/image-20210812170316128.png" /></p>
+<h3 id="1225">12.2.5 进一步重载赋值运算符<a class="headerlink" href="#1225" title="Permanent link">&para;</a></h3>
+<p><img alt="image-20210812170559987" src="https://static.fungenomics.com/images/2021/08/image-20210812170559987.png" /></p>
+<p>重载&gt;&gt;运算符提供了一种将键盘输入行读入到String对象中的简单 方法。它假定输入的字符数不多于String::CINLIM的字符数，并丢弃多 余的字符。在if条件下，如果由于某种原因（如到达文件尾或<code>get(char *, int)</code> 读取的是一个空行）导致输入失败，istream对象的值将置为 false。</p>
+<h2 id="123-new">12.3 在构造函数中使用new时应注意的事项<a class="headerlink" href="#123-new" title="Permanent link">&para;</a></h2>
+<p>使用new初始化对象的指针成员时必须特别小心：</p>
+<ul>
+<li>如果在构造函数中使用new来初始化指针成员，则应在析构函数中 使用delete；</li>
+<li>new和delete必须相互兼容。new对应于delete，new[ ]对应于delete[ ]；</li>
+<li>如果有多个构造函数，则必须以相同的方式使用new，要么都带中 括号，要么都不带。因为只有一个析构函数，所有的构造函数都必 须与它兼容。然而，可以在一个构造函数中使用new初始化指针， 而在另一个构造函数中将指针初始化为空（0或C++11中的 nullptr），这是因为delete（无论是带中括号还是不带中括号）可以用于空指针；</li>
+<li>应定义一个复制构造函数，通过深度复制将一个对象初始化为另一 个对象；</li>
+</ul>
+<p><img alt="image-20210812183412719" src="https://static.fungenomics.com/images/2021/08/image-20210812183412719.png" /></p>
+<ul>
+<li>应当定义一个赋值运算符，通过深度复制将一个对象复制给另一个对象；</li>
+</ul>
+<p><img alt="image-20210812183448925" src="https://static.fungenomics.com/images/2021/08/image-20210812183448925.png" /></p>
+<p>具体地说，该方法应完成这些操作：<strong>检查自我赋值的情况，释放成员指针以前指向的内存，复制数据而不仅仅是数据的地址，并返回一个指向调用对象的引用</strong>。</p>
+<h3 id="1231">12.3.1 应该和不应该<a class="headerlink" href="#1231" title="Permanent link">&para;</a></h3>
+<h3 id="1232">12.3.2 包含类成员的类的逐成员复制<a class="headerlink" href="#1232" title="Permanent link">&para;</a></h3>
+<p><img alt="image-20210812185109539" src="https://static.fungenomics.com/images/2021/08/image-20210812185109539.png" /></p>
+<p>如果您将一个 Magazine对象复制或赋值给另一个Magazine对象，逐成员复制将使用成 员类型定义的复制构造函数和赋值运算符。也就是说，复制成员title 时，将使用String的复制构造函数，而将成员title赋给另一个Magazine对 象时，将使用String的赋值运算符，依此类推。</p>
+<h2 id="124">12.4 有关返回对象的说明<a class="headerlink" href="#124" title="Permanent link">&para;</a></h2>
+<p>当成员函数或独立的函数返回对象时，有几种返回方式可供选择。 可以**返回指向对象的引用、指向对象的const引用或const对象**。</p>
+<h3 id="1241-const">12.4.1 返回指向const对象的引用<a class="headerlink" href="#1241-const" title="Permanent link">&para;</a></h3>
+<p><img alt="image-20210812185620612" src="https://static.fungenomics.com/images/2021/08/image-20210812185620612.png" /></p>
+<p>这里有三点需要说明。首先，返回对象将调用复制构造函数，而返回引用不会，所以版本2效率更高。其次，引用指向的对象应该在调用函数执行时存在。第 三，<strong>v1和v2都被声明为const引用，因此返回类型必须为const，这样才匹配</strong>。</p>
+<h3 id="1242-const">12.4.2 返回指向非const对象的引用<a class="headerlink" href="#1242-const" title="Permanent link">&para;</a></h3>
+<p>两种常见的返回非 <code>const</code> 对象情形是，重载赋值运算符以及重载与 <code>cout</code> 一起使用的 <code>&lt;&lt;</code> 运算符。前者这样做旨在提高效率，而后者必须这样做。</p>
+<p>Operator&lt;&lt;()的返回值用于串接输出：</p>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">s1</span><span class="p">(</span><span class="s">&quot;Good stuff&quot;</span><span class="p">);</span>
+<span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; is comming!&quot;</span><span class="p">;</span>
+</code></pre></div>
+<p><code>operator&lt;&lt;（cout, s1）</code>的返回值成为一个用于显示字符串“is coming!”的对象。返回类型必须是 <code>ostream &amp;</code>，而不能仅仅是 <code>ostream</code>。<strong>如果使用返回类型<code>ostream</code>，将要求调用<code>ostream</code>类的复制构造 函数，而<code>ostream</code>没有公有的复制构造函数</strong>。</p>
+<h3 id="1243">12.4.3 返回对象<a class="headerlink" href="#1243" title="Permanent link">&para;</a></h3>
+<p>如果被返回的对象是**被调用函数中的局部变量，则不应按引用方式返回它，因为在被调用函数执行完毕时，局部对象将调用其析构函数**。因此，当控制权回到调用函数时，引用指向的对象将不再存在。<strong>在这种情况下，应返回对象而不是引用</strong>。</p>
+<h3 id="1244-const">12.4.4 返回 <code>const</code> 对象<a class="headerlink" href="#1244-const" title="Permanent link">&para;</a></h3>
+<p>前面的Vector::operator+( )定义有一个奇异的属性，它旨在让您能够 以下面这样的方式使用它：<code>net = force1 + force2;</code>。</p>
+<p>然而，这种定义也允许您这样使用它：</p>
+<div class="highlight"><pre><span></span><code>force1 + force2 = net;
+cout &lt;&lt; (force1 + force2 = net).magval() &lt;&lt; endl;
+</code></pre></div>
+<p>这提出了三个问题。为何编写这样的语句？这些语句为何可行？这 些语句有何功能？<strong>首先，没有要编写这种语句的合理理由，但并非所有代码都是合理的</strong>。</p>
+<p>这种代码之所以可行，是因为复制构造函数将创建一个临时 对象来表示返回值。因此，在前面的代码中，表达式force1 + force2的结 果为一个临时对象。在语句1中，该临时对象被赋给net；在语句2和3 中，net被赋给该临时对象。使用完临时对象后，将把它丢弃。</p>
+<p>总之，如果方法或函数要返回局部对象，则应返回对象，而不是指 向对象的引用。在这种情况下，将使用复制构造函数来生成返回的对 象。如果方法或函数要返回一个没有公有复制构造函数的类（如ostream类）的对象，它必须返回一个指向这种对象的引用。最后，有些方法和 函数（如重载的赋值运算符）可以返回对象，也可以返回指向对象的引 用，在这种情况下，应首选引用，因为其效率更高。</p>
+<h2 id="125">12.5 使用指向对象的指针<a class="headerlink" href="#125" title="Permanent link">&para;</a></h2>
+<p><img alt="image-20210812215628088" src="https://static.fungenomics.com/images/2021/08/image-20210812215628088.png" /></p>
+<h3 id="1251-newdelete">12.5.1 再谈<code>new</code>和<code>delete</code><a class="headerlink" href="#1251-newdelete" title="Permanent link">&para;</a></h3>
+<p><img alt="image-20210812220903934" src="https://static.fungenomics.com/images/2021/08/image-20210812220903934.png" /></p>
+<h3 id="1252">12.5.2 指针和对象小结<a class="headerlink" href="#1252" title="Permanent link">&para;</a></h3>
+<ul>
+<li>使用常规表示法来声明指向对象的指针；</li>
+<li>可以将指针初始化为指向已有的对象；</li>
+<li>可以使用new来初始化指针，这将创建一个新的对象；</li>
+<li>对类使用new将调用相应的类构造函数来初始化新创建的对象。</li>
+</ul>
+<p><img alt="image-20210812221115586" src="https://static.fungenomics.com/images/2021/08/image-20210812221115586.png" /></p>
+<p><img alt="image-20210812221146826" src="https://static.fungenomics.com/images/2021/08/image-20210812221146826.png" /></p>
+<ul>
+<li>可以使用<code>-&gt;</code>运算符通过指针访问类方法；</li>
+<li>可以对对象指针应用解除引用运算符<code>*</code>来获得对象。</li>
+</ul>
+<h3 id="1253-new">12.5.3 再谈定位new运算符<a class="headerlink" href="#1253-new" title="Permanent link">&para;</a></h3>
+<h2 id="126">12.6 复习各种技术<a class="headerlink" href="#126" title="Permanent link">&para;</a></h2>
+<h3 id="1261">12.6.1 重载&lt;&lt;运算符<a class="headerlink" href="#1261" title="Permanent link">&para;</a></h3>
+<p>要重新定义 &lt;&lt; 运算符，以便将它和cout一起用来显示对象的内 容，请定义下面的友元运算符函数：</p>
+<p><img alt="image-20210812221524669" src="https://static.fungenomics.com/images/2021/08/image-20210812221524669.png" /></p>
+<h3 id="1262">12.6.2 转换函数<a class="headerlink" href="#1262" title="Permanent link">&para;</a></h3>
+<p>要将单个值转换为类类型，需要创建原型如下所示的类构造函数：</p>
+<div class="highlight"><pre><span></span><code><span class="n">class_name</span><span class="p">(</span><span class="n">type_name</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+</code></pre></div>
+<p>要将类转换为其他类型，需要创建原型如下所示的类成员函数：</p>
+<div class="highlight"><pre><span></span><code>operator type_name();
+</code></pre></div>
+<p>虽然该函数没有声明返回类型，但应返回所需类型的值。</p>
+<p>使用转换函数时要小心。可以在声明构造函数时使用关键字 explicit，以防止它被用于隐式转换。</p>
+<h3 id="1263-new">12.6.3 其构造函数使用new的类<a class="headerlink" href="#1263-new" title="Permanent link">&para;</a></h3>
+<h2 id="127">12.7 队列模拟<a class="headerlink" href="#127" title="Permanent link">&para;</a></h2>
+<p>这里不记录了。</p>
+<p>对于<code>const</code>数据成员，必须在执行到构造函数体之前，即创建对象时进行初始化。C++提供了一种特殊的语法来完成上 述工作，它叫做成员初始化列表（member initializer list）。成员初始化 列表由逗号分隔的初始化列表组成（前面带冒号）。它位于参数列表的 右括号之后、函数体左括号之前。如果数据成员的名称为 <code>mdata</code>，并需 要将它初始化为<code>val</code>，则初始化器为<code>mdata(val)</code>。</p>
+<p><img alt="image-20210814205323898" src="https://static.fungenomics.com/images/2021/08/image-20210814205323898.png" /></p>
+<p><strong>只有构造函数可以使用这种初始化列表语法</strong>。如上所示，对于const 类成员，必须使用这种语法。另外，<strong>对于被声明为引用的类成员，也必须使用这种语法</strong>：</p>
+<p><img alt="image-20210814205737591" src="https://static.fungenomics.com/images/2021/08/image-20210814205737591.png" /></p>
+<p><strong>这是因为引用与const数据类似，只能在被创建时进行初始化</strong>。对于 简单数据成员（例如front和items），使用成员初始化列表和在函数体中 使用赋值没有什么区别。</p>
+<blockquote>
+<p>【注意】：
+这种格式只能用于构造函数；
+必须用这种格式来初始化非静态const数据成员；
+必须用这种格式来初始化引用数据成员。</p>
+</blockquote>
+<p><strong>不能将成员初始化列表语法用于构造函数之外的其他类方法</strong>。</p>
+<p>如果我们不希望复制构造函数被调用，也不允许赋值运算，可以这样做：</p>
+<p><img alt="image-20210814214006080" src="https://static.fungenomics.com/images/2021/08/image-20210814214006080.png" /></p>
+<p>这是一种禁用方法的技巧，同时可以作为一种暂时不编写这两个函数的预防措施：与其将来面对无法预料的运行故障，不如得到一个易于跟踪的编译错误，指出这些方法是不可访问的。另外，在定义其对象不允许 被复制的类时，这种方法也很有用。</p>
+<p>还有没有其他影响需要注意呢？当然有。当对象被按值传递（或返 回）时，复制构造函数将被调用。然而，如果遵循优先采用按引用传递 对象的惯例，将不会有任何问题。另外，复制构造函数还被用于创建其 他的临时对象，但Queue定义中并没有导致创建临时对象的操作，例如 重载加法运算符。</p>
+<h2 id="128">12.8 总结<a class="headerlink" href="#128" title="Permanent link">&para;</a></h2>
+<p>本章介绍了定义和使用类的许多重要方面。其中的一些方面是非常 微妙甚至很难理解的概念。</p>
+<p>在类构造函数中使用new，也可能在对象过期 时引发问题。如果对象包含成员指针，同时它指向的内存是由new分配 的，则释放用于保存对象的内存并不会自动释放对象成员指针指向的内 存。因此在类构造函数中使用new类来分配内存时，应在类析构函数中 使用delete来释放分配的内存。这样，当对象过期时，将自动释放其指 针成员指向的内存。</p>
+<p>如果对象包含指向new分配的内存的指针成员，则将一个对象初始 化为另一个对象，或将一个对象赋给另一个对象时，也会出现问题。</p>
+<p>在 默认情况下，C++逐个对成员进行初始化和赋值，这意味着被初始化或 被赋值的对象的成员将与原始对象完全相同。如果原始对象的成员指向 一个数据块，则副本成员将指向同一个数据块。当程序最终删除这两个 对象时，类的析构函数将试图删除同一个内存数据块两次，这将出错。解决方法是：<strong>定义一个特殊的复制构造函数来重新定义初始化，并重载赋值运算符</strong>。</p>
+<p>这样，旧对象和新对象都将引用独立 的、相同的数据，而不会重叠。由于同样的原因，必须定义赋值运算 符。对于每一种情况，最终目的都是执行深度复制，也就是说，复制实际的数据，而不仅仅是复制指向数据的指针。</p>
+<p><strong>C++允许在类中包含结构、类和枚举定义。这些嵌套类型的作用域为整个类</strong>，这意味着它们被局限于类中，不 会与其他地方定义的同名结构、类和枚举发生冲突。</p>
+<p>C++为**类构造函数**提供了一种可用来**初始化数据成员的特殊语法**。 这种语法包括冒号和由逗号分隔的初始化列表，被放在构造函数参数的 右括号后，函数体的左括号之前。每一个初始化器都由被初始化的成员 的名称和包含初始值的括号组成。从概念上来说，这些初始化操作是在 对象创建时进行的，此时函数体中的语句还没有执行。语法如下：</p>
+<p><div class="highlight"><pre><span></span><code>queue(int qs): qsize(qs), items(0), front(NULL), rear(NULL) {}
+</code></pre></div>
+如果数据成员是**非静态const成员或引用，则必须采用这种格式**，但 可将C++11新增的类内初始化用于非静态const成员。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright @ 2023 Privia
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Privia2023" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://space.bilibili.com/82184281" target="_blank" rel="noopener" title="space.bilibili.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M488.6 104.1c16.7 18.1 24.4 39.7 23.3 65.7v202.4c-.4 26.4-9.2 48.1-26.5 65.1-17.2 17-39.1 25.9-65.5 26.7H92.02c-26.45-.8-48.21-9.8-65.28-27.2C9.682 419.4.767 396.5 0 368.2V169.8c.767-26 9.682-47.6 26.74-65.7C43.81 87.75 65.57 78.77 92.02 78h29.38L96.05 52.19c-5.75-5.73-8.63-13-8.63-21.79 0-8.8 2.88-16.06 8.63-21.797C101.8 2.868 109.1 0 117.9 0s16.1 2.868 21.9 8.603L213.1 78h88l74.5-69.397C381.7 2.868 389.2 0 398 0c8.8 0 16.1 2.868 21.9 8.603 5.7 5.737 8.6 12.997 8.6 21.797 0 8.79-2.9 16.06-8.6 21.79L394.6 78h29.3c26.4.77 48 9.75 64.7 26.1zm-38.8 69.7c-.4-9.6-3.7-17.4-10.7-23.5-5.2-6.1-14-9.4-22.7-9.8H96.05c-9.59.4-17.45 3.7-23.58 9.8-6.14 6.1-9.4 13.9-9.78 23.5v194.4c0 9.2 3.26 17 9.78 23.5s14.38 9.8 23.58 9.8H416.4c9.2 0 17-3.3 23.3-9.8 6.3-6.5 9.7-14.3 10.1-23.5V173.8zm-264.3 42.7c6.3 6.3 9.7 14.1 10.1 23.2V273c-.4 9.2-3.7 16.9-9.8 23.2-6.2 6.3-14 9.5-23.6 9.5-9.6 0-17.5-3.2-23.6-9.5-6.1-6.3-9.4-14-9.8-23.2v-33.3c.4-9.1 3.8-16.9 10.1-23.2 6.3-6.3 13.2-9.6 23.3-10 9.2.4 17 3.7 23.3 10zm191.5 0c6.3 6.3 9.7 14.1 10.1 23.2V273c-.4 9.2-3.7 16.9-9.8 23.2-6.1 6.3-14 9.5-23.6 9.5-9.6 0-17.4-3.2-23.6-9.5-7-6.3-9.4-14-9.7-23.2v-33.3c.3-9.1 3.7-16.9 10-23.2 6.3-6.3 14.1-9.6 23.3-10 9.2.4 17 3.7 23.3 10z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
